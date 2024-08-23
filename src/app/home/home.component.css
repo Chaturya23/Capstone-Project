@@ -1,0 +1,189 @@
+/* app.component.css */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  header {
+    background-color:cadetblue;
+    color: #fff;
+    padding: 10px;
+  }
+  
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo {
+    font-size: 24px;
+  }
+  
+  .auth-buttons button {
+    margin: 0 5px;
+  }
+  
+  .hamburger {
+    display: none; /* Show only on smaller screens if needed */
+  }
+  
+  .hamburger {
+    display: block; /* Ensure it’s visible */
+    background: cadetblue;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 24px;
+  }
+  
+  .hamburger-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .hamburger-menu ul li {
+    margin: 10px 0;
+  }
+  
+  .hamburger-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  main {
+    padding: 20px;
+    padding-bottom: 60px; /* Add padding to avoid content being hidden behind the footer */
+  }
+  
+  .form-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .form-horizontal {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+ /* Styling for the form-group */
+.form-group {
+    display: flex;
+    flex-direction: column; /* Changed to column to stack label and input vertically */
+    margin-bottom: 15px;
+}
+
+/* Styling for the form-group label */
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Styling for the form-group input */
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Styling for the submit button */
+button[type="submit"] {
+    background:cadetblue; /* Green background color */
+    border: none;
+    color: white;
+    padding: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%; /* Full width of the container */
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+button[type="submit"]:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+}
+
+/* Error message styling */
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+  
+  footer {
+    background-color: cadetblue;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures the footer is above other content */
+  }
+  .side-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 200px; /* Adjust as needed */
+    background: #f4f4f4; /* Background color */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    display: flex;
+    flex-direction: column;
+    padding-top: 0; /* Remove extra padding if needed */
+    margin-top: 0; /* Remove extra margin if needed */
+    z-index: 1000; /* Ensure it appears above other content */
+}
+  
+.menu-header {
+    padding: 3px 10px; /* Reduced padding */
+    background:cadetblue; /* Header background color */
+    text-align: center;
+    font-size: 16px; /* Reduced font size */
+    font-weight: bold;
+    margin-bottom: 0; /* Remove bottom margin to reduce gap */
+}
+
+  
+  .menu-item {
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .menu-item:hover {
+    background-color: cadetblue; /* Highlight color on hover */
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    z-index: 999; /* Ensure it appears behind the menu but above other content */
+    display: none; /* Hidden by default */
+  }
+  
+  .side-menu.open ~ .overlay {
+    display: block; /* Show overlay when menu is open */
+  }
+  
+  

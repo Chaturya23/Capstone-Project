@@ -1,0 +1,106 @@
+<header>
+    <div class="header-container">
+      <button class="hamburger" (click)="toggleMenu()">&#9776;</button>
+      <div class="logo">My E-Commerce</div>
+      <div class="auth-buttons">
+        <button (click)="showForm('signIn')">Sign In</button>
+        <button (click)="showForm('signUp')">Sign Up</button>
+      </div>
+    </div>
+  </header>
+  
+  <nav class="side-menu" *ngIf="menuOpen">
+    <div class="menu-header">
+      <h2>Menu</h2>
+    </div>
+    <div class="menu-item" [routerLink]="['/shop']">Shop</div>
+    <div class="menu-item" [routerLink]="['/about']">About Us</div>
+    <div class="menu-item" [routerLink]="['/contact']">Contact</div>
+    <div class="overlay" (click)="closeMenu()"></div>
+  </nav>
+  
+  <main>
+    <div [ngSwitch]="currentView">
+      <ng-container *ngSwitchCase="'signIn'">
+        <div class="form-container">
+          <div class="form-horizontal">
+            <form (ngSubmit)="signIn()" #signInForm="ngForm">
+              <div class="form-group">
+                <label for="signInEmail">Email:</label>
+                <input id="signInEmail" [(ngModel)]="signInEmail" name="email" #email="ngModel" required>
+                <div *ngIf="signInForm.submitted && !email.valid" class="error">
+                  Email is required
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="signInPassword">Password:</label>
+                <input id="signInPassword" type="password" [(ngModel)]="signInPassword" name="password" #password="ngModel" required>
+                <div *ngIf="signInForm.submitted && !password.valid" class="error">
+                  Password is required
+                </div>
+              </div>
+              <div class="form-group">
+                <button type="submit">Sign In</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-container>
+  
+      <ng-container *ngSwitchCase="'signUp'">
+        <div class="form-container">
+          <div class="form-horizontal">
+            <form (ngSubmit)="signUp()" #signUpForm="ngForm">
+              <div class="form-group">
+                <label for="signUpFullName">Full Name:</label>
+                <input id="signUpFullName" [(ngModel)]="signUpFullName" name="fullName" #fullName="ngModel" required>
+                <div *ngIf="signUpForm.submitted && !fullName.valid" class="error">
+                  Full Name is required
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="signUpEmail">Email:</label>
+                <input id="signUpEmail" [(ngModel)]="signUpEmail" name="email" #email="ngModel" required email>
+                <div *ngIf="signUpForm.submitted && (!email.valid || email.errors?.['email'])" class="error">
+                  Invalid email address
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="signUpPhone">Phone Number:</label>
+                <input id="signUpPhone" [(ngModel)]="signUpPhone" name="phone" #phone="ngModel" required pattern="^[0-9]{10}$">
+                <div *ngIf="signUpForm.submitted && (!phone.valid || phone.errors?.['pattern'])" class="error">
+                  Phone number must be 10 digits
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="signUpPassword">Password:</label>
+                <input id="signUpPassword" type="password" [(ngModel)]="signUpPassword" name="password" #password="ngModel" required minlength="6">
+                <div *ngIf="signUpForm.submitted && (!password.valid || password.errors?.['minlength'])" class="error">
+                  Password must be at least 6 characters long
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="signUpConfirmPassword">Confirm Password:</label>
+                <input id="signUpConfirmPassword" type="password" [(ngModel)]="signUpConfirmPassword" name="confirmPassword" #confirmPassword="ngModel" required>
+                <div *ngIf="signUpForm.submitted && signUpPassword !== signUpConfirmPassword" class="error">
+                  Passwords do not match
+                </div>
+              </div>
+              <div class="form-group">
+                <button type="submit">Sign Up</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </ng-container>
+  
+      <ng-container *ngSwitchDefault>
+        <p>Welcome to My E-Commerce Website!</p>
+      </ng-container>
+    </div>
+  </main>
+  
+  <footer>
+    <p>&copy; 2024 My E-Commerce Website</p>
+  </footer>
+  

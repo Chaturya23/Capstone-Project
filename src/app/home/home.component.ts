@@ -1,7 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet,Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 
@@ -13,7 +13,7 @@ import { AuthService } from '../auth.service';
   imports: [CommonModule, FormsModule, RouterOutlet,RouterModule]
 })
 export class HomeComponent {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
 
   menuOpen = false;
@@ -35,7 +35,8 @@ export class HomeComponent {
     this.authService.signIn(this.signInEmail, this.signInPassword).subscribe(
       response => {
         console.log('Sign In Successful', response);
-        // Navigate to another page or show success message
+        // Navigate to the products page after successful sign-in
+        this.router.navigate(['/products']);
       },
       error => {
         console.error('Sign In Failed', error);
@@ -46,21 +47,22 @@ export class HomeComponent {
 
   signUp(): void {
     if (this.signUpPassword !== this.signUpConfirmPassword) {
-      alert('Passwords do not match');
-      return;
+        alert('Passwords do not match');
+        return;
     }
 
     this.authService.signUp(this.signUpFullName, this.signUpEmail, this.signUpPhone, this.signUpPassword).subscribe(
-      response => {
-        console.log('Sign Up Successful', response);
-        // Navigate to another page or show success message
-      },
-      error => {
-        console.error('Sign Up Failed', error);
-        alert('Registration failed');
-      }
+        response => {
+            console.log('Sign Up Successful', response);
+            alert('Registration successful! Please sign in.');
+            this.currentView = 'signIn'; // Navigate to the Sign In page
+        },
+        error => {
+            console.error('Sign Up Failed', error);
+            alert('Registration failed');
+        }
     );
-  }
+}
 
  
 

@@ -10,14 +10,11 @@
   </header>
   
   <nav class="side-menu" *ngIf="menuOpen">
-    <div class="menu-header">
-      <h2>Menu</h2>
-    </div>
-    <div class="menu-item" [routerLink]="['/shop']">Shop</div>
-    <div class="menu-item" [routerLink]="['/about']">About Us</div>
-    <div class="menu-item" [routerLink]="['/contact']">Contact</div>
-    <div class="overlay" (click)="closeMenu()"></div>
+    <a class="menu-item" [routerLink]="['/products']">Products</a>
+    <a class="menu-item" [routerLink]="['/about']">About Us</a>
+    <a class="menu-item" [routerLink]="['/contactus']">Contact Us</a>
   </nav>
+  
   
   <main>
     <div [ngSwitch]="currentView">

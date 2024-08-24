@@ -1,20 +1,66 @@
 <header>
-    <div class="header-container">
-      <button class="hamburger" (click)="toggleMenu()">&#9776;</button>
-      <div class="logo">My E-Commerce</div>
-      <div class="auth-buttons">
-        <button (click)="showForm('signIn')">Sign In</button>
-        <button (click)="showForm('signUp')">Sign Up</button>
-      </div>
+  <div class="header-container">
+    <button class="hamburger" (click)="toggleMenu()">&#9776;</button>
+    <div class="logo">My E-Commerce</div>
+    <div class="auth-buttons">
+      <button (click)="showForm('signIn')">Sign In</button>
+      <button (click)="showForm('signUp')">Sign Up</button>
     </div>
-  </header>
+  </div>
+</header>
+
+<div class="layout-container">
+  <div class="sidebar">
+    <div class="logo">
+      <h2>Amado</h2>
+      <p>FURNITURE</p>
+    </div>
+    <nav>
+      <ul>
+        <li><a routerLink="/home">HOME</a></li>
+        <li><a routerLink="/shop">SHOP</a></li>
+        <li><a routerLink="/products">PRODUCT</a></li>
+        <li><a routerLink="/cart">CART</a></li>
+        <li><a routerLink="/checkout">CHECKOUT</a></li>
+      </ul>
+    </nav>
+    <div class="special-offers">
+      <button class="discount-btn">%Discount%</button>
+      <button class="new-item-btn">New this week</button>
+    </div>
+    <div class="sidebar-footer">
+      <ul>
+        <li><a routerLink="/cart">CART (0)</a></li>
+        <li><a routerLink="/favourite">FAVOURITE</a></li>
+        <li><a routerLink="/search">SEARCH</a></li>
+      </ul>
+    </div>
+    
+  </div>
+  <main>
+    <div [ngSwitch]="currentView">
+      <!-- Existing code for forms and default view -->
   
-  <nav class="side-menu" *ngIf="menuOpen">
-    <a class="menu-item" [routerLink]="['/products']">Products</a>
-    <a class="menu-item" [routerLink]="['/about']">About Us</a>
-    <a class="menu-item" [routerLink]="['/contactus']">Contact Us</a>
-  </nav>
-  
+      <ng-container *ngSwitchDefault>
+        <p>Welcome to My E-Commerce Website!</p>
+        <!-- Grid Layout for Images -->
+        <section class="image-grid">
+          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 1"></div>
+          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 2"></div>
+          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 3"></div>
+          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 4"></div>
+          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 5"></div> 
+          <div class="grid-item"><img src="im.png" alt="Product 2"></div>
+          <div class="grid-item"><img src="pro/img9.png" alt="Product 1"></div>
+          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 2"></div>
+          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 3"></div>
+          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 4"></div>
+          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 5"></div>
+          <div class="grid-item"><img src="assests/img9.png" alt="Product 3"></div>
+        </section>
+      </ng-container>
+    </div>
+  </main>
   
   <main>
     <div [ngSwitch]="currentView">
@@ -43,7 +89,7 @@
           </div>
         </div>
       </ng-container>
-  
+
       <ng-container *ngSwitchCase="'signUp'">
         <div class="form-container">
           <div class="form-horizontal">
@@ -90,14 +136,14 @@
           </div>
         </div>
       </ng-container>
-  
+
       <ng-container *ngSwitchDefault>
         <p>Welcome to My E-Commerce Website!</p>
       </ng-container>
     </div>
   </main>
-  
-  <footer>
-    <p>&copy; 2024 My E-Commerce Website</p>
-  </footer>
-  
+</div>
+
+<footer>
+  <p>&copy; 2024 My E-Commerce Website</p>
+</footer>

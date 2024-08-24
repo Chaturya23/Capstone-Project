@@ -185,5 +185,97 @@ button[type="submit"]:hover {
   .side-menu.open ~ .overlay {
     display: block; /* Show overlay when menu is open */
   }
+  .sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+  }
+  
+  .logo {
+    text-align: center;
+  }
+  
+  .logo h2 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .logo p {
+    margin: 0;
+    font-size: 14px;
+    color: #ffcc00;
+  }
+  
+  nav ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  nav ul li {
+    margin: 15px 0;
+  }
+  
+  nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    display: block;
+  }
+  
+  .special-offers {
+    margin-top: 20px;
+  }
+  
+  .discount-btn, .new-item-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #ffcc00;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+  }
+  
+  .sidebar-footer ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar-footer ul li {
+    margin: 10px 0;
+  }
+  
+  .sidebar-footer ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+  }
+/* Grid layout for images */
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.grid-item {
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.grid-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
   
   

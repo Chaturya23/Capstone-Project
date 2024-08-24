@@ -1,57 +1,55 @@
 <!-- Navigation Bar with Hamburger Menu -->
 <mat-toolbar>
-    <button mat-icon-button (click)="toggleMenu($event)">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span class="toolbar-title">Shop</span>
-  </mat-toolbar>
-  
-  
-  <nav class="side-menu" [class.open]="menuOpen">
-    <div class="menu-content">
-      <a class="menu-item" [routerLink]="['/home']" (click)="closeMenu()">Home</a>
-      <a class="menu-item" [routerLink]="['/products']" (click)="closeMenu()">Products</a>
-      <a class="menu-item" [routerLink]="['/aboutus']" (click)="closeMenu()">About Us</a>
-      <a class="menu-item" [routerLink]="['/contactus']" (click)="closeMenu()">Contact Us</a>
-    </div>
-  </nav>
-  
-  <!-- Main Content -->
-  <div class="container" [class.shift]="menuOpen">
-    <!-- Product Filters -->
-    <div class="filters">
-      <mat-form-field>
-        <mat-label>Category</mat-label>
-        <mat-select (selectionChange)="onCategoryChange($event.value)">
-          <mat-option value="all">All</mat-option>
-          <mat-option value="chairs">Chairs</mat-option>
-          <mat-option value="beds">Beds</mat-option>
-          <mat-option value="furniture">Furniture</mat-option>
-          <mat-option value="home-decor">Home Decor</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  
-    <!-- Product Grid -->
-    <div class="product-grid">
-      <mat-card *ngFor="let product of filteredProducts">
-        <mat-card-header>
-          <mat-card-title>{{ product.name }}</mat-card-title>
-          <mat-card-subtitle>${{ product.price }}</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image [src]="product.imageUrl" alt="{{ product.name }}">
-        <mat-card-content>
-          <p>{{ product.description }}</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button>Add to Cart</button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
+  <button mat-icon-button (click)="toggleMenu($event)">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="toolbar-title">Shop</span>
+</mat-toolbar>
+
+<nav class="side-menu" [class.open]="menuOpen">
+  <div class="menu-content">
+    <a class="menu-item" [routerLink]="['/home']" (click)="closeMenu()">Home</a>
+    <a class="menu-item" [routerLink]="['/products']" (click)="closeMenu()">Products</a>
+    <a class="menu-item" [routerLink]="['/aboutus']" (click)="closeMenu()">About Us</a>
+    <a class="menu-item" [routerLink]="['/contactus']" (click)="closeMenu()">Contact Us</a>
   </div>
-  
-  <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; 2024 My Shop. All rights reserved.</p>
-  </footer>
-  
+</nav>
+
+<!-- Main Content -->
+<div class="container" [class.shift]="menuOpen">
+  <!-- Product Filters -->
+  <div class="filters">
+    <mat-form-field>
+      <mat-label>Category</mat-label>
+      <mat-select (selectionChange)="onCategoryChange($event.value)">
+        <mat-option value="all">All</mat-option>
+        <mat-option value="chairs">Chairs</mat-option>
+        <mat-option value="beds">Beds</mat-option>
+        <mat-option value="furniture">Furniture</mat-option>
+        <mat-option value="home-decor">Home Decor</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="product-grid">
+    <mat-card *ngFor="let product of filteredProducts">
+      <mat-card-header>
+        <mat-card-title>{{ product.name }}</mat-card-title>
+        <mat-card-subtitle>${{ product.price }}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [src]="product.imageUrl" alt="{{ product.name }}">
+      <mat-card-content>
+        <p>{{ product.description }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button (click)="addToCart(product)">Add to Cart</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>&copy; 2024 My Shop. All rights reserved.</p>
+</footer>

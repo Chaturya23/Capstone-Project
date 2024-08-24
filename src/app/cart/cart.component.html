@@ -1,0 +1,12 @@
+<!-- cart.component.html -->
+<div *ngIf="cartItems.length === 0">Your cart is empty.</div>
+<mat-card *ngFor="let item of cartItems">
+  <mat-card-header>
+    <mat-card-title>{{ item.name }}</mat-card-title>
+    <mat-card-subtitle>Price: ${{ item.price }} | Quantity: {{ item.quantity }}</mat-card-subtitle>
+  </mat-card-header>
+  <img mat-card-image [src]="item.imageUrl" alt="{{ item.name }}">
+  <mat-card-content>
+    <p>{{ item.description }}</p>
+  </mat-card-content>
+</mat-card>

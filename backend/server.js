@@ -64,3 +64,31 @@ app.post('/api/login', async (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const productSchema = new mongoose.Schema({
+  name: String,
+  description: String,
+  price: Number,
+  category: String
+});
+
+// Create a model based on the schema
+const Product = mongoose.model('Product', productSchema);
+
+// Route to add a new product
+app.post('/api/products', async (req, res) => {
+  const { name, description, price, category } = req.body;
+
+  const newProduct = new Product({
+    name,
+    description,
+    price,
+    category
+  });
+
+  try {
+    await newProduct.save();
+    res.status(201).json(newProduct);
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding product', error });
+  }
+});

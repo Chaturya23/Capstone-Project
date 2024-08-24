@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 export interface Product {
   name: string;
@@ -13,7 +14,7 @@ export interface Product {
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule],
+  imports: [FormsModule, CommonModule, RouterModule, HttpClientModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
@@ -32,6 +33,8 @@ export class ProductComponent {
   productCategory = '';
   categories = ['Electronics', 'Books', 'Clothing', 'Accessories'];
 
+  constructor(private http: HttpClient) {}
+
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
     console.log('Menu open:', this.menuOpen); // Debugging output
@@ -47,13 +50,23 @@ export class ProductComponent {
 
   addProduct(form: NgForm) {
     if (form.valid) {
-      this.products.push({
+      const newProduct: Product = {
         name: this.productName,
         description: this.productDescription,
         price: this.productPrice,
         category: this.productCategory
+      };
+
+      // Send the product to the server to be stored in the database
+      this.http.post<Product>('http://localhost:5000/api/products', newProduct).subscribe({
+        next: (product) => {
+          this.products.push(product); // Add the newly created product to the products array
+          this.resetForm();
+        },
+        error: (err) => {
+          console.error('Error adding product:', err);
+        }
       });
-      this.resetForm();
     }
   }
 

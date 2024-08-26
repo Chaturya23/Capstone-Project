@@ -36,7 +36,7 @@ export class HomeComponent {
       response => {
         console.log('Sign In Successful', response);
         // Navigate to the products page after successful sign-in
-        this.router.navigate(['/products']);
+        this.router.navigate(['/shop']);
       },
       error => {
         console.error('Sign In Failed', error);

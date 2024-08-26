@@ -37,8 +37,9 @@
   }
   
   mat-card-image {
-    height: 200px;
-    object-fit: cover;
+    width: 100px; /* Adjust the width as needed */
+    height: 100px; /* Adjust the height as needed */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
     border-radius: 4px;
     margin-bottom: 15px;
   }
@@ -134,6 +135,25 @@
     background: cadetblue;
     color: #fff;
   }
+  mat-toolbar {
+    width: 100%;
+  }
+  
+  /* Style for the toolbar title */
+  .toolbar-title {
+    background-color: cadetblue; /* Set your desired background color here */
+    padding: 0 16px; /* Adjust padding as needed (top/bottom 0px, left/right 16px) */
+    border-radius: 4px; /* Optional: adds rounded corners */
+    display: inline-block; /* Ensure it fits the content size */
+    line-height: 48px; /* Adjust to vertically center text if needed */
+    color: white; /* Optional: text color */
+  }
+  
+  /* Ensure that the toolbar and its content are aligned properly */
+  mat-toolbar .mat-icon-button,
+  mat-toolbar .mat-toolbar-title {
+    height: 100%; /* Ensure that items align vertically */
+  }
   
   
   /* Responsive Design */
@@ -153,23 +173,5 @@
   }
   /* Add this to your shop.component.css */
 /* Ensure the toolbar spans the full width of the screen */
-mat-toolbar {
-    width: 100%;
-  }
-  
-  /* Style for the toolbar title */
-  .toolbar-title {
-    background-color: cadetblue; /* Set your desired background color here */
-    padding: 0 16px; /* Adjust padding as needed (top/bottom 0px, left/right 16px) */
-    border-radius: 4px; /* Optional: adds rounded corners */
-    display: inline-block; /* Ensure it fits the content size */
-    line-height: 48px; /* Adjust to vertically center text if needed */
-    color: white; /* Optional: text color */
-  }
-  
-  /* Ensure that the toolbar and its content are aligned properly */
-  mat-toolbar .mat-icon-button,
-  mat-toolbar .mat-toolbar-title {
-    height: 100%; /* Ensure that items align vertically */
-  }
+
   

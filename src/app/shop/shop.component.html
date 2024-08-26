@@ -8,8 +8,11 @@
 
 <nav class="side-menu" [class.open]="menuOpen">
   <div class="menu-content">
-    <a class="menu-item" [routerLink]="['/home']" (click)="closeMenu()">Home</a>
-    <a class="menu-item" [routerLink]="['/products']" (click)="closeMenu()">Products</a>
+    <a class="menu-item" [routerLink]="['/home']" (click)="closeMenu()">HOME</a>
+    <a class="menu-item" [routerLink]="['/shop']" (click)="closeMenu()">SHOP</a>
+    <a class="menu-item" [routerLink]="['/products']" (click)="closeMenu()">PRODUCTS</a>
+    <a class="menu-item" [routerLink]="['/cart']" (click)="closeMenu()">CART</a>
+    <a class="menu-item" [routerLink]="['/checkout']" (click)="closeMenu()">CHECKOUT</a>
     <a class="menu-item" [routerLink]="['/aboutus']" (click)="closeMenu()">About Us</a>
     <a class="menu-item" [routerLink]="['/contactus']" (click)="closeMenu()">Contact Us</a>
   </div>

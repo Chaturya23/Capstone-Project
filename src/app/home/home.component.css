@@ -1,281 +1,186 @@
-/* app.component.css */
-
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  header {
-    background-color:cadetblue;
-    color: #fff;
-    padding: 10px;
-  }
-  
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .logo {
-    font-size: 24px;
-  }
-  
-  .auth-buttons button {
-    margin: 0 5px;
-  }
-  
-  .hamburger {
-    display: none; /* Show only on smaller screens if needed */
-  }
-  
-  .hamburger {
-    display: block; /* Ensure it’s visible */
-    background: cadetblue;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 24px;
-  }
-  
-  .hamburger-menu ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .hamburger-menu ul li {
-    margin: 10px 0;
-  }
-  
-  .hamburger-menu ul li a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  main {
-    padding: 20px;
-    padding-bottom: 60px; /* Add padding to avoid content being hidden behind the footer */
-  }
-  
-  .form-container {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .form-horizontal {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
- /* Styling for the form-group */
-.form-group {
-    display: flex;
-    flex-direction: column; /* Changed to column to stack label and input vertically */
-    margin-bottom: 15px;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-/* Styling for the form-group label */
-.form-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color:cadetblue;
+  color: white;
 }
 
-/* Styling for the form-group input */
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+.hamburger {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
-/* Styling for the submit button */
-button[type="submit"] {
-    background:cadetblue; /* Green background color */
-    border: none;
-    color: white;
-    padding: 15px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    width: 100%; /* Full width of the container */
-    margin-top: 10px;
-    transition: background-color 0.3s;
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  
 }
 
-/* Button hover effect */
-button[type="submit"]:hover {
-    background-color: #45a049; /* Slightly darker green on hover */
+.auth-buttons {
+  margin-left: auto;
+}
+
+.auth-buttons button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #555;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background-color:cadetblue;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar .logo h2 {
+  margin: 0;
+  font-size: 28px;
+  text-transform: uppercase;
+}
+
+.sidebar .logo p {
+  margin: 5px 0 20px;
+  font-size: 14px;
+  color:black;
+}
+
+.sidebar nav ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar nav ul li {
+  margin-bottom: 10px;
+}
+
+.sidebar nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.image-grid .grid-item {
+  width: 100%;
+  height: 300px; /* Set a fixed height for grid items */
+  overflow: hidden;
+}
+
+.image-grid .grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the container without distortion */
+  border-radius: 8px;
+}
+
+/* General styling for the form container */
+.form-container {
+  max-width: 450px;
+  margin: 20px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+/* Styling for form groups */
+.form-horizontal .form-group {
+  margin-bottom: 20px;
+}
+
+/* Label styling */
+.form-horizontal .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Input styling */
+.form-horizontal .form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.form-horizontal .form-group input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Button styling */
+.form-horizontal .form-group button {
+  width: 100%;
+  padding: 12px;
+  background-color: #05991b;
+  border: none;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.form-horizontal .form-group button:hover {
+  background-color: cadetblue;
+}
+
+.form-horizontal .form-group button:active {
+  transform: scale(0.98);
 }
 
 /* Error message styling */
 .error {
-    color: red;
-    font-size: 0.9em;
-    margin-top: 5px;
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
-  
-  footer {
-    background-color: cadetblue;
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    z-index: 1000; /* Ensures the footer is above other content */
-  }
-  .side-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 200px; /* Adjust as needed */
-    background: #f4f4f4; /* Background color */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
-    display: flex;
-    flex-direction: column;
-    padding-top: 0; /* Remove extra padding if needed */
-    margin-top: 0; /* Remove extra margin if needed */
-    z-index: 1000; /* Ensure it appears above other content */
-}
-  
-.menu-header {
-    padding: 3px 10px; /* Reduced padding */
-    background:cadetblue; /* Header background color */
-    text-align: center;
-    font-size: 16px; /* Reduced font size */
-    font-weight: bold;
-    margin-bottom: 0; /* Remove bottom margin to reduce gap */
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
 
-  
-  .menu-item {
-    padding: 15px;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .menu-item:hover {
-    background-color: cadetblue; /* Highlight color on hover */
-  }
-  
-  .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
-    z-index: 999; /* Ensure it appears behind the menu but above other content */
-    display: none; /* Hidden by default */
-  }
-  
-  .side-menu.open ~ .overlay {
-    display: block; /* Show overlay when menu is open */
-  }
-  .sidebar {
-    width: 250px;
-    background-color: #f8f9fa;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
-  }
-  
-  .logo {
-    text-align: center;
-  }
-  
-  .logo h2 {
-    font-size: 24px;
-    margin: 0;
-  }
-  
-  .logo p {
-    margin: 0;
-    font-size: 14px;
-    color: #ffcc00;
-  }
-  
-  nav ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  nav ul li {
-    margin: 15px 0;
-  }
-  
-  nav ul li a {
-    text-decoration: none;
-    color: #333;
-    font-size: 16px;
-    display: block;
-  }
-  
-  .special-offers {
-    margin-top: 20px;
-  }
-  
-  .discount-btn, .new-item-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #ffcc00;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  
-  .sidebar-footer ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar-footer ul li {
-    margin: 10px 0;
-  }
-  
-  .sidebar-footer ul li a {
-    text-decoration: none;
-    color: #333;
-    font-size: 14px;
-  }
-/* Grid layout for images */
-.image-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  padding: 16px;
+footer {
+  background-color:cadetblue;
+  color: white;
+  text-align: center;
+  padding: 10px;
 }
-
-.grid-item {
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.grid-item img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-}
-  
-  

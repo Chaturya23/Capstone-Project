@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 // import { ContactComponent } from './contact/contact.component';
 
 export const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'products', component: ProductComponent },
   { path: 'contactus', component: ContactusComponent },

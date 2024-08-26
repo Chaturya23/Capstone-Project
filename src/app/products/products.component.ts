@@ -9,6 +9,7 @@ export interface Product {
   description: string;
   price: number;
   category: string;
+  image?: string; 
 }
 
 @Component({
@@ -22,10 +23,10 @@ export class ProductComponent {
   menuOpen = false;
   showForm = false;
   products: Product[] = [
-    { name: 'Laptop', description: 'High performance laptop', price: 999, category: 'Electronics' },
-    { name: 'Book', description: 'Educational book', price: 15, category: 'Books' },
-    { name: 'T-Shirt', description: 'Cotton T-shirt', price: 20, category: 'Clothing' },
-    { name: 'Watch', description: 'Wrist watch', price: 120, category: 'Accessories' }
+    { name: 'Laptop', description: 'High performance laptop', price: 999, category: 'Electronics',image: 'https://example.com/watch.jpg'  },
+    { name: 'Book', description: 'Educational book', price: 15, category: 'Books' ,image: 'https://example.com/watch.jpg' },
+    { name: 'T-Shirt', description: 'Cotton T-shirt', price: 20, category: 'Clothing',image: 'https://example.com/watch.jpg'  },
+    { name: 'Watch', description: 'Wrist watch', price: 120, category: 'Accessories',image: '/assets/im.png'  }
   ];
   productName = '';
   productDescription = '';

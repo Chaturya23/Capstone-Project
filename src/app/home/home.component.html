@@ -1,7 +1,7 @@
 <header>
   <div class="header-container">
-    <button class="hamburger" (click)="toggleMenu()">&#9776;</button>
-    <div class="logo">My E-Commerce</div>
+    
+    <!-- <div class="logo">My E-Commerce</div> -->
     <div class="auth-buttons">
       <button (click)="showForm('signIn')">Sign In</button>
       <button (click)="showForm('signUp')">Sign Up</button>
@@ -24,46 +24,25 @@
         <li><a routerLink="/checkout">CHECKOUT</a></li>
       </ul>
     </nav>
-    <div class="special-offers">
-      <button class="discount-btn">%Discount%</button>
-      <button class="new-item-btn">New this week</button>
-    </div>
-    <div class="sidebar-footer">
-      <ul>
-        <li><a routerLink="/cart">CART (0)</a></li>
-        <li><a routerLink="/favourite">FAVOURITE</a></li>
-        <li><a routerLink="/search">SEARCH</a></li>
-      </ul>
-    </div>
-    
   </div>
-  <main>
+
+  <main class="content">
     <div [ngSwitch]="currentView">
       <!-- Existing code for forms and default view -->
-  
+
       <ng-container *ngSwitchDefault>
-        <p>Welcome to My E-Commerce Website!</p>
+        <!-- <p>Welcome to My E-Commerce Website!</p> -->
         <!-- Grid Layout for Images -->
         <section class="image-grid">
-          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 1"></div>
-          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 2"></div>
-          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 3"></div>
-          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 4"></div>
-          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 5"></div> 
-          <div class="grid-item"><img src="im.png" alt="Product 2"></div>
-          <div class="grid-item"><img src="pro/img9.png" alt="Product 1"></div>
-          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 2"></div>
-          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 3"></div>
-          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 4"></div>
-          <div class="grid-item"><img src="https://via.placeholder.com/300" alt="Product 5"></div>
-          <div class="grid-item"><img src="assests/img9.png" alt="Product 3"></div>
+          <div class="grid-item"><img src="/assets/im.png" alt="Product 1"></div>
+          <div class="grid-item"><img src="/assets/hd5.png" alt="Product 2"></div>
+          <div class="grid-item"><img src="/assets/hd1.png" alt="Product 3"></div>
+          <div class="grid-item"><img src="/assets/hd4.png" alt="Product 4"></div>
+          <div class="grid-item"><img src="/assets/im4.png" alt="Product 5"></div>
+          <div class="grid-item"><img src="/assets/t6.png" alt="Product 6"></div>
         </section>
       </ng-container>
-    </div>
-  </main>
-  
-  <main>
-    <div [ngSwitch]="currentView">
+
       <ng-container *ngSwitchCase="'signIn'">
         <div class="form-container">
           <div class="form-horizontal">
@@ -138,7 +117,7 @@
       </ng-container>
 
       <ng-container *ngSwitchDefault>
-        <p>Welcome to My E-Commerce Website!</p>
+        <!-- <p>Welcome to My E-Commerce Website!</p> -->
       </ng-container>
     </div>
   </main>

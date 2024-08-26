@@ -91,10 +91,10 @@ import { Router } from '@angular/router';
 export class ShopComponent {
   menuOpen = false;
   products = [
-    { name: 'Chair 1', price: 29.99, imageUrl: 'path-to-chair-image1.jpg', description: 'Comfortable chair', category: 'chairs' },
-    { name: 'Bed 1', price: 59.99, imageUrl: 'path-to-bed-image1.jpg', description: 'King size bed', category: 'beds' },
-    { name: 'Furniture Set', price: 99.99, imageUrl: 'path-to-furniture-image1.jpg', description: 'Modern furniture set', category: 'furniture' },
-    { name: 'Decor Item', price: 19.99, imageUrl: 'path-to-decor-image1.jpg', description: 'Beautiful home decor', category: 'home-decor' },
+    { name: 'Chair 1', price: 29.99, imageUrl: 'assets/im.png', description: 'Comfortable chair', category: 'chairs' },
+    { name: 'Bed 1', price: 59.99, imageUrl: 'assets/im.png', description: 'King size bed', category: 'beds' },
+    { name: 'Furniture Set', price: 99.99, imageUrl: 'assets/im.png', description: 'Modern furniture set', category: 'furniture' },
+    { name: 'Decor Item', price: 19.99, imageUrl: 'assets/im.png', description: 'Beautiful home decor', category: 'home-decor' },
   ];
 
   filteredProducts = this.products;

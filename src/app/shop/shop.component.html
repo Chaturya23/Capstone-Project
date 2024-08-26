@@ -1,10 +1,12 @@
-<!-- Navigation Bar with Hamburger Menu -->
-<mat-toolbar>
-  <button mat-icon-button (click)="toggleMenu($event)">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span class="toolbar-title">Shop</span>
-</mat-toolbar>
+
+<div class="page-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="menu-icon" (click)="toggleMenu($event)">
+      &#9776; 
+    </div>
+    <h3>SHOP</h3>
+  </header>
 
 <nav class="side-menu" [class.open]="menuOpen">
   <div class="menu-content">
@@ -27,8 +29,8 @@
       <mat-select (selectionChange)="onCategoryChange($event.value)">
         <mat-option value="all">All</mat-option>
         <mat-option value="chairs">Chairs</mat-option>
-        <mat-option value="beds">Beds</mat-option>
-        <mat-option value="furniture">Furniture</mat-option>
+        <mat-option value="sofa">sofa</mat-option>
+        <mat-option value="table">Table</mat-option>
         <mat-option value="home-decor">Home Decor</mat-option>
       </mat-select>
     </mat-form-field>
@@ -39,10 +41,10 @@
     <mat-card *ngFor="let product of filteredProducts">
       <mat-card-header>
         <mat-card-title>{{ product.name }}</mat-card-title>
-        <mat-card-subtitle>${{ product.price }}</mat-card-subtitle>
       </mat-card-header>
       <img mat-card-image [src]="product.imageUrl" alt="{{ product.name }}">
       <mat-card-content>
+        <mat-card-title>${{ product.price }}</mat-card-title>
         <p>{{ product.description }}</p>
       </mat-card-content>
       <mat-card-actions>

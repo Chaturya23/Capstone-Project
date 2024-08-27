@@ -1,12 +1,32 @@
 <!-- cart.component.html -->
-<div *ngIf="cartItems.length === 0">Your cart is empty.</div>
-<mat-card *ngFor="let item of cartItems">
-  <mat-card-header>
-    <mat-card-title>{{ item.name }}</mat-card-title>
-    <mat-card-subtitle>Price: ${{ item.price }} | Quantity: {{ item.quantity }}</mat-card-subtitle>
-  </mat-card-header>
-  <img mat-card-image [src]="item.imageUrl" alt="{{ item.name }}">
-  <mat-card-content>
-    <p>{{ item.description }}</p>
-  </mat-card-content>
-</mat-card>
+<div class="cart-container">
+  <div *ngIf="cartItems.length === 0" class="empty-cart-message">
+    Your cart is empty.
+  </div>
+  
+  <div *ngIf="cartItems.length > 0">
+    <div class="cart-items">
+      <mat-card *ngFor="let item of cartItems" class="cart-item-card">
+        <mat-card-header>
+          <mat-card-title>{{ item.name }}</mat-card-title>
+          <mat-card-subtitle>Price: ${{ item.price }} | Quantity: {{ item.quantity }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="item.imageUrl" alt="{{ item.name }}" class="item-image">
+        <mat-card-content>
+          <p>{{ item.description }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="removeItem(item)">Remove</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    
+    <div class="cart-summary">
+      <h2>Cart Summary</h2>
+      <p>Total Items: {{ cartItems.length }}</p>
+      <p>Total Price: ${{ getTotalPrice() | number:'1.2-2' }}</p>
+      <button mat-raised-button color="accent" (click)="checkout()">Proceed to Checkout</button>
+    </div>
+  </div>
+</div>
+

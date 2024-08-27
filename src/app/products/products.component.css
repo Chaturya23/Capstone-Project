@@ -15,8 +15,9 @@
   
 }
 .product-image {
-  width: 100px; /* Adjust width as needed */
-  height: auto; /* Maintain aspect ratio */
+  width: 100%; /* Make the image responsive to container width */
+  max-width: 600px; /* Set a maximum width for large screens */
+  height: 200px; /* Maintain aspect ratio */
   display: block;
   margin-bottom: 10px;
 }
@@ -43,18 +44,25 @@
 
 .product-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-wrap: wrap; /* Allows wrapping of items to the next row */
+  gap: 10px; /* Space between items */
+  justify-content: space-between; /* Distribute space evenly */
 }
 
-.product {
+/* .product {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 20px;
-  width: calc(25% - 20px); /* Adjust width as needed */
+  width: calc(25% - 20px); 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+} */
+.product {
+  flex: 1 1 calc(25% - 10px); /* 4 items in a row, accounting for gap */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  max-width: calc(25% - 10px); /* Maximum width for each item */
+  text-align: center; /* Center content */
 }
 
 .product h2 {

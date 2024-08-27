@@ -6,16 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 export interface Product {
   name: string;
-  description: string;
   price: number;
-  category: string;
   image?: string; 
 }
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule,HttpClientModule],
+  imports: [FormsModule, CommonModule, RouterModule, HttpClientModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
@@ -23,16 +21,21 @@ export class ProductComponent {
   menuOpen = false;
   showForm = false;
   products: Product[] = [
-    { name: 'Laptop', description: 'High performance laptop', price: 999, category: 'Electronics',image: 'https://example.com/watch.jpg'  },
-    { name: 'Book', description: 'Educational book', price: 15, category: 'Books' ,image: 'https://example.com/watch.jpg' },
-    { name: 'T-Shirt', description: 'Cotton T-shirt', price: 20, category: 'Clothing',image: 'https://example.com/watch.jpg'  },
-    { name: 'Watch', description: 'Wrist watch', price: 120, category: 'Accessories',image: '/assets/im.png'  }
+    { name: 'Laptop', price: 999, image: 'assets/im1.png' },
+    { name: 'Book', price: 15, image: 'assets/s1.png' },
+    { name: 'T-Shirt', price: 20, image: 'assets/t1.png' },
+    { name: 'Watch', price: 120, image: 'assets/hd1.png' },
+    { name: 'Laptop', price: 999, image: 'assets/im1.png' },
+    { name: 'Book', price: 15, image: 'assets/s1.png' },
+    { name: 'T-Shirt', price: 20, image: 'assets/t1.png' },
+    { name: 'Watch', price: 120, image: 'assets/hd1.png' }
   ];
   productName = '';
   productDescription = '';
   productPrice = 0;
   productCategory = '';
-  categories = ['Electronics', 'Books', 'Clothing', 'Accessories'];
+  productImage = ''; // Add this line to handle image URL
+  categories = ['Chairs', 'Sofa', 'Table', 'Home Decor'];
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
@@ -51,9 +54,8 @@ export class ProductComponent {
     if (form.valid) {
       this.products.push({
         name: this.productName,
-        description: this.productDescription,
         price: this.productPrice,
-        category: this.productCategory
+        image: this.productImage
       });
       this.resetForm();
     }
@@ -64,6 +66,7 @@ export class ProductComponent {
     this.productDescription = '';
     this.productPrice = 0;
     this.productCategory = '';
+    this.productImage = ''; // Clear the image URL
     this.showForm = false;
   }
 }

@@ -11,9 +11,10 @@
   <!-- Side Menu -->
   <nav class="side-menu" [class.open]="menuOpen">
     <a class="menu-item" [routerLink]="['/home']">Home</a>
-    <a class="menu-item" [routerLink]="['/aboutus']">About Us</a>
     <a class="menu-item" [routerLink]="['/shop']">SHOP</a>
+    <a class="menu-item" [routerLink]="['/products']">Products</a>
     <a class="menu-item" [routerLink]="['/cart']">CART</a>
+    <a class="menu-item" [routerLink]="['/checkout']">Check out</a>
     <a class="menu-item" [routerLink]="['/contactus']">Contact Us</a>
   </nav>
 
@@ -23,23 +24,25 @@
   <!-- Product List -->
   <section class="products">
     <div class="product-row">
+      <!-- Display Default Products -->
       <ng-container *ngIf="!products.length">
-        <!-- Default Products -->
         <div class="product">
+          <img src="/assets/im1.png" alt="Laptop" class="product-image">
           <h2>Laptop</h2>
           <h3>Cost $999</h3>
         </div>
         <div class="product">
+          <img src="/assets/s1.png" alt="Book" class="product-image">
           <h2>Book</h2>
           <h3>Cost $15</h3>
         </div>
         <div class="product">
+          <img src="/assets/t1.png" alt="T-Shirt" class="product-image">
           <h2>T-Shirt</h2>
           <h3>Cost $20</h3>
-          
         </div>
         <div class="product">
-          <img src="/assets/im.png"  alt="Laptop" class="product-image">
+          <img src="/assets/hd1.png" alt="Watch" class="product-image">
           <h2>Watch</h2>
           <h3>Cost $120</h3>
         </div>
@@ -47,6 +50,7 @@
 
       <!-- Display Dynamic Products -->
       <div *ngFor="let product of products" class="product">
+        <img [src]="product.image" [alt]="product.name" class="product-image">
         <h2>{{ product.name }}</h2>
         <h3>Cost ${{ product.price }}</h3>
       </div>
@@ -89,6 +93,14 @@
         </select>
         <div *ngIf="productForm.submitted && !category.valid" class="error">
           Category is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="productImage">Image URL:</label>
+        <input id="productImage" [(ngModel)]="productImage" name="image" #image="ngModel" required>
+        <div *ngIf="productForm.submitted && !image.valid" class="error">
+          Image URL is required
         </div>
       </div>
 

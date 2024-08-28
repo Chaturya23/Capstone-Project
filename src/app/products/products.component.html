@@ -1,66 +1,50 @@
 <div class="page-container">
-  <!-- Header -->
   <header class="header">
     <div class="menu-icon" (click)="toggleMenu()">
       &#9776; <!-- Hamburger icon -->
     </div>
     <h3>Products</h3>
-    <div class="action-dropdown">
-      <button (click)="toggleDropdown()">Actions &#9662;</button>
-      <div *ngIf="dropdownOpen" class="dropdown-content">
-        <a (click)="showAddForm()">Add Product</a>
-        <a (click)="showEditForm()">Edit Product</a>
-        <a (click)="showDeleteForm()">Delete Product</a>
-      </div>
+    <div class="action-buttons">
+      <button (click)="showAddForm()">Add Product</button>
     </div>
   </header>
 
-  <!-- Side Menu -->
-  <nav class="side-menu" [class.open]="menuOpen">
-    <a class="menu-item" [routerLink]="['/home']">Home</a>
-    <a class="menu-item" [routerLink]="['/shop']">SHOP</a>
-    <a class="menu-item" [routerLink]="['/products']">Products</a>
-    <a class="menu-item" [routerLink]="['/cart']">CART</a>
-    <a class="menu-item" [routerLink]="['/checkout']">Check out</a>
-    <a class="menu-item" [routerLink]="['/contactus']">Contact Us</a>
-  </nav>
-
-  <!-- Overlay to close menu when clicked outside -->
-  <div *ngIf="menuOpen" class="overlay" (click)="closeMenu()"></div>
-  <button (click)="logout()">Logout</button>
-
-  <!-- Product List -->
   <section class="products">
+    <div *ngIf="loading">Loading products...</div>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
     <div class="product-row">
-      <!-- Display Default Products -->
-      <ng-container *ngIf="!products.length">
-        <div class="product">
-          <img src="/assets/im1.png" alt="Laptop" class="product-image">
-          <h2>Laptop</h2>
-          <h3>Cost $999</h3>
-        </div>
-        <div class="product">
-          <img src="/assets/s1.png" alt="Book" class="product-image">
-          <h2>Book</h2>
-          <h3>Cost $15</h3>
-        </div>
-        <div class="product">
-          <img src="/assets/t1.png" alt="T-Shirt" class="product-image">
-          <h2>T-Shirt</h2>
-          <h3>Cost $20</h3>
-        </div>
-        <div class="product">
-          <img src="/assets/hd1.png" alt="Watch" class="product-image">
-          <h2>Watch</h2>
-          <h3>Cost $120</h3>
-        </div>
-      </ng-container>
-
-      <!-- Display Dynamic Products -->
       <div *ngFor="let product of products" class="product">
         <img [src]="product.image" [alt]="product.name" class="product-image">
         <h2>{{ product.name }}</h2>
         <h3>Cost ${{ product.price }}</h3>
+
+        <button (click)="startEditing(product)">Edit</button>
+        <button (click)="confirmDelete(product)">Delete</button>
+
+        <!-- Inline editing form -->
+        <div *ngIf="editingProduct && editingProduct._id === product._id" class="product-form-container">
+          <form (ngSubmit)="updateProduct()">
+            <label for="name">Name:</label>
+            <input type="text" id="name" [(ngModel)]="editingProduct.name" name="name" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" [(ngModel)]="editingProduct.description" name="description" required></textarea>
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" [(ngModel)]="editingProduct.price" name="price" required>
+
+            <label for="category">Category:</label>
+            <select id="category" [(ngModel)]="editingProduct.category" name="category" required>
+              <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+            </select>
+
+            <label for="image">Image URL:</label>
+            <input type="text" id="image" [(ngModel)]="editingProduct.image" name="image" required>
+
+            <button type="submit">Update Product</button>
+            <button type="button" (click)="cancelEditing()">Cancel</button>
+          </form>
+        </div>
       </div>
     </div>
   </section>
@@ -68,142 +52,26 @@
   <!-- Add Product Form -->
   <div *ngIf="showForm === 'add'" class="product-form-container">
     <h2>Add New Product</h2>
-    <form (ngSubmit)="addProduct(productForm)" #productForm="ngForm">
-      <div class="form-group">
-        <label for="productName">Product Name:</label>
-        <input id="productName" [(ngModel)]="productName" name="name" #name="ngModel" required>
-        <div *ngIf="productForm.submitted && !name.valid" class="error">
-          Product name is required
-        </div>
-      </div>
+    <form (ngSubmit)="addProduct()" #productForm="ngForm">
+      <label for="name">Name:</label>
+      <input type="text" id="name" [(ngModel)]="newProduct.name" name="name" required>
 
-      <div class="form-group">
-        <label for="productDescription">Description:</label>
-        <textarea id="productDescription" [(ngModel)]="productDescription" name="description" #description="ngModel" required></textarea>
-        <div *ngIf="productForm.submitted && !description.valid" class="error">
-          Description is required
-        </div>
-      </div>
+      <label for="description">Description:</label>
+      <textarea id="description" [(ngModel)]="newProduct.description" name="description" required></textarea>
 
-      <div class="form-group">
-        <label for="productPrice">Price:</label>
-        <input id="productPrice" type="number" [(ngModel)]="productPrice" name="price" #price="ngModel" required min="0">
-        <div *ngIf="productForm.submitted && (!price.valid || price.errors?.['min'])" class="error">
-          Price must be a positive number
-        </div>
-      </div>
+      <label for="price">Price:</label>
+      <input type="number" id="price" [(ngModel)]="newProduct.price" name="price" required>
 
-      <div class="form-group">
-        <label for="productCategory">Category:</label>
-        <select id="productCategory" [(ngModel)]="productCategory" name="category" #category="ngModel" required>
-          <option value="" disabled>Select a category</option>
-          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
-        </select>
-        <div *ngIf="productForm.submitted && !category.valid" class="error">
-          Category is required
-        </div>
-      </div>
+      <label for="category">Category:</label>
+      <select id="category" [(ngModel)]="newProduct.category" name="category" required>
+        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+      </select>
 
-      <div class="form-group">
-        <label for="productImage">Image URL:</label>
-        <input id="productImage" [(ngModel)]="productImage" name="image" #image="ngModel" required>
-        <div *ngIf="productForm.submitted && !image.valid" class="error">
-          Image URL is required
-        </div>
-      </div>
+      <label for="image">Image URL:</label>
+      <input type="text" id="image" [(ngModel)]="newProduct.image" name="image" required>
 
-      <div class="form-group">
-        <button type="submit">Add Product</button>
-        <button type="button" (click)="toggleForm()">Cancel</button>
-      </div>
+      <button type="submit">Add Product</button>
+      <button type="button" (click)="toggleForm()">Cancel</button>
     </form>
   </div>
-  
-
-  <!-- Edit Product Form -->
-<div *ngIf="showForm === 'edit'" class="product-form-container">
-  <h2>Edit Product</h2>
-  <form (ngSubmit)="editProduct(productForm)" #productForm="ngForm">
-    <div class="form-group">
-      <label for="selectedProduct">Select Product:</label>
-      <select id="selectedProduct" [(ngModel)]="selectedProduct" name="selectedProduct" #selectedProduct="ngModel" required>
-        <option value="" disabled>Select a product to edit</option>
-        <option *ngFor="let product of products" [ngValue]="product">{{ product.name }}</option>
-      </select>
-      <div *ngIf="productForm.submitted && !selectedProduct" class="error">
-        Please select a product
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="productName">Product Name:</label>
-      <input id="productName" [(ngModel)]="productName" name="name" #name="ngModel" required>
-      <div *ngIf="productForm.submitted && !name.valid" class="error">
-        Product name is required
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="productDescription">Description:</label>
-      <textarea id="productDescription" [(ngModel)]="productDescription" name="description" #description="ngModel" required></textarea>
-      <div *ngIf="productForm.submitted && !description.valid" class="error">
-        Description is required
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="productPrice">Price:</label>
-      <input id="productPrice" type="number" [(ngModel)]="productPrice" name="price" #price="ngModel" required min="0">
-      <div *ngIf="productForm.submitted && (!price.valid || price.errors?.['min'])" class="error">
-        Price must be a positive number
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="productCategory">Category:</label>
-      <select id="productCategory" [(ngModel)]="productCategory" name="category" #category="ngModel" required>
-        <option value="" disabled>Select a category</option>
-        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
-      </select>
-      <div *ngIf="productForm.submitted && !category.valid" class="error">
-        Category is required
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="productImage">Image URL:</label>
-      <input id="productImage" [(ngModel)]="productImage" name="image" #image="ngModel" required>
-      <div *ngIf="productForm.submitted && !image.valid" class="error">
-        Image URL is required
-      </div>
-    </div>
-
-    <div class="form-group">
-      <button type="submit">Update Product</button>
-      <button type="button" (click)="toggleForm()">Cancel</button>
-    </div>
-  </form>
 </div>
-
-<!-- Delete Product Form -->
-<div *ngIf="showForm === 'delete'" class="product-form-container">
-  <h2>Delete Product</h2>
-  <form (ngSubmit)="deleteProduct(productForm)" #productForm="ngForm">
-    <div class="form-group">
-      <label for="selectedProductToDelete">Select Product:</label>
-      <select id="selectedProductToDelete" [(ngModel)]="selectedProductToDelete" name="selectedProductToDelete" #selectedProductToDelete="ngModel" required>
-        <option value="" disabled>Select a product to delete</option>
-        <option *ngFor="let product of products" [ngValue]="product">{{ product.name }}</option>
-      </select>
-      <div *ngIf="productForm.submitted && !selectedProductToDelete" class="error">
-        Please select a product
-      </div>
-    </div>
-
-    <div class="form-group">
-      <button type="submit">Delete Product</button>
-      <button type="button" (click)="toggleForm()">Cancel</button>
-    </div>
-  </form>
-</div>
- 

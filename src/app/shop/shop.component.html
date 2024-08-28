@@ -1,60 +1,17 @@
-
 <div class="page-container">
-  <!-- Header -->
-  <header class="header">
-    <div class="menu-icon" (click)="toggleMenu($event)">
-      &#9776; 
+  <section class="products">
+    <div *ngIf="loading">Loading products...</div>
+    <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+    <div class="product-row">
+      <div *ngFor="let product of products" class="product-card">
+        <img [src]="product.image" [alt]="product.name" class="product-image">
+        <div class="product-info">
+          <h2>{{ product.name }}</h2>
+          <h3>Cost ${{ product.price }}</h3>
+          <p>{{ product.description }}</p>
+          <button (click)="addToCart(product)">Add to Cart</button>
+        </div>
+      </div>
     </div>
-    <h3>SHOP</h3>
-  </header>
-
-<nav class="side-menu" [class.open]="menuOpen">
-  <div class="menu-content">
-    <a class="menu-item" [routerLink]="['/home']" (click)="closeMenu()">HOME</a>
-    <a class="menu-item" [routerLink]="['/shop']" (click)="closeMenu()">SHOP</a>
-    <a class="menu-item" [routerLink]="['/products']" (click)="closeMenu()">PRODUCTS</a>
-    <a class="menu-item" [routerLink]="['/cart']" (click)="closeMenu()">CART</a>
-    <a class="menu-item" [routerLink]="['/checkout']" (click)="closeMenu()">CHECKOUT</a>
-    <a class="menu-item" [routerLink]="['/aboutus']" (click)="closeMenu()">About Us</a>
-    <a class="menu-item" [routerLink]="['/contactus']" (click)="closeMenu()">Contact Us</a>
-  </div>
-</nav>
-
-<!-- Main Content -->
-<div class="container" [class.shift]="menuOpen">
-  <!-- Product Filters -->
-  <div class="filters">
-    <mat-form-field>
-      <mat-label>Category</mat-label>
-      <mat-select (selectionChange)="onCategoryChange($event.value)">
-        <mat-option value="all">All</mat-option>
-        <mat-option value="chairs">Chairs</mat-option>
-        <mat-option value="sofa">Sofa</mat-option>
-        <mat-option value="table">Table</mat-option>
-        <mat-option value="home-decor">Home Decor</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-
-  <!-- Product Grid -->
-  <div class="product-grid">
-    <mat-card *ngFor="let product of filteredProducts">
-      <mat-card-header>
-        <mat-card-title>{{ product.name }}</mat-card-title>
-      </mat-card-header>
-      <img mat-card-image [src]="product.imageUrl" alt="{{ product.name }}">
-      <mat-card-content>
-        <mat-card-title>${{ product.price }}</mat-card-title>
-        <p>{{ product.description }}</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button (click)="addToCart(product)">Add to Cart</button>
-      </mat-card-actions>
-    </mat-card>
-  </div>
+  </section>
 </div>
-
-<!-- Footer -->
-<footer class="footer">
-  <p>&copy; 2024 My Shop. All rights reserved.</p>
-</footer>

@@ -1,133 +1,112 @@
-import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-import { Router } from '@angular/router';
-
-export interface Product {
-  name: string;
-  price: number;
-  image?: string; 
-  description?: string;
-  category?: string;
-}
 
 @Component({
-  selector: 'app-products',
-  standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule, HttpClientModule],
+  selector: 'app-product',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  imports: [FormsModule, CommonModule],
+  standalone: true,
+  styleUrls: ['./products.component.css'],
 })
-export class ProductComponent {
-  menuOpen = false;
-  dropdownOpen = false;
-  showForm: 'add' | 'edit' | 'delete' | null = null;
+export class ProductComponent implements OnInit {
   products: any[] = [];
-  categories = ['Chairs', 'Sofas', 'Tables', 'Home Decor'];
-  productName = '';
-  productDescription = '';
-  productPrice = 0;
-  productCategory = '';
-  productImage = '';
-  selectedProduct: any = null;
-  selectedProductToDelete: any = null;
-  constructor(private router: Router) {}
+  newProduct: any = {};
+  editingProduct: any = null;
+  showForm: string | null = null;
+  categories: string[] = ['Category 1', 'Category 2', 'Category 3'];
+  loading = false;
+  errorMessage: string | null = null;
 
-  ngOnInit() {
-    // Initial data or fetch products from a service
-    this.products = [
-      { name: 'Chair', description: 'A high-performance laptop', price: 999, category: 'Chairs', image: '/assets/im1.png' },
-      { name: 'Sofa', description: 'A thrilling novel', price: 15, category: 'Sofas', image: '/assets/s1.png' },
-      { name: 'Table', description: 'A comfortable t-shirt', price: 20, category: 'Table', image: '/assets/t1.png' },
-      { name: 'Home decor', description: 'A stylish watch', price: 120, category: 'Home Decor', image: '/assets/hd1.png' },
-      { name: 'Chair', description: 'A high-performance laptop', price: 999, category: 'Chairs', image: '/assets/im7.png' },
-      { name: 'Sofa', description: 'A thrilling novel', price: 15, category: 'Sofas', image: '/assets/s6.png' },
-      { name: 'Home Decor', description: 'A comfortable t-shirt', price: 20, category: 'Home Decor', image: '/assets/hd7.png' },
-      { name: 'Home Decor', description: 'A stylish watch', price: 120, category: 'Home Decor', image: '/assets/hd6.png' }
-    ];
+  private apiUrl = 'http://localhost:3000/api/products';
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.getProducts();
+  }
+
+  getProducts(): void {
+    this.loading = true;
+    this.errorMessage = null;
+    this.http.get<any[]>(this.apiUrl).subscribe({
+      next: (data) => {
+        this.products = data;
+        this.loading = false;
+      },
+      error: (error) => {
+        this.errorMessage = 'Failed to load products. Please try again later.';
+        this.loading = false;
+      }
+    });
+  }
+
+  addProduct(): void {
+    if (this.newProduct.name && this.newProduct.price) {
+      this.http.post(this.apiUrl, this.newProduct).subscribe({
+        next: () => {
+          this.getProducts();
+          this.toggleForm(); // Close form after adding product
+        },
+        error: (error) => {
+          this.errorMessage = 'Failed to add product. Please try again later.';
+        }
+      });
+    }
+  }
+
+  startEditing(product: any): void {
+    this.editingProduct = { ...product }; // Create a copy to edit
+    console.log('Editing Product:', this.editingProduct); // Debugging
+  }
+
+  updateProduct(): void {
+    if (this.editingProduct) {
+      this.http.put(`${this.apiUrl}/${this.editingProduct._id}`, this.editingProduct).subscribe({
+        next: () => {
+          this.getProducts();
+          this.editingProduct = null; // Close form after updating product
+        },
+        error: (error) => {
+          this.errorMessage = 'Failed to update product. Please try again later.';
+        }
+      });
+    }
+  }
+
+  cancelEditing(): void {
+    this.editingProduct = null; // Close form
+  }
+
+  confirmDelete(product: any): void {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.deleteProduct(product);
+    }
+  }
+
+  deleteProduct(product: any): void {
+    this.http.delete(`${this.apiUrl}/${product._id}`).subscribe({
+      next: () => {
+        this.getProducts();
+      },
+      error: (error) => {
+        this.errorMessage = 'Failed to delete product. Please try again later.';
+      }
+    });
   }
 
   toggleMenu() {
-    this.menuOpen = !this.menuOpen;
+    // Add your logic to toggle the menu here
+    console.log('Menu toggled');
   }
 
-  closeMenu() {
-    this.menuOpen = false;
-  }
-
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
-  }
-
-  showAddForm() {
+  showAddForm(): void {
     this.showForm = 'add';
-    this.dropdownOpen = false;
+    this.newProduct = {}; // Reset new product form
   }
 
-  showEditForm() {
-    this.showForm = 'edit';
-    this.dropdownOpen = false;
-  }
-
-  showDeleteForm() {
-    this.showForm = 'delete';
-    this.dropdownOpen = false;
-  }
-
-  toggleForm() {
+  toggleForm(): void {
     this.showForm = null;
-    this.resetForm();
-  }
-
-  addProduct(form: NgForm) {
-    if (form.valid) {
-      this.products.push({
-        name: this.productName,
-        description: this.productDescription,
-        price: this.productPrice,
-        category: this.productCategory,
-        image: this.productImage
-      });
-      this.toggleForm();
-    }
-  }
-
-  editProduct(form: NgForm) {
-    if (form.valid && this.selectedProduct) {
-      const index = this.products.findIndex(p => p === this.selectedProduct);
-      if (index !== -1) {
-        this.products[index] = {
-          name: this.productName,
-          description: this.productDescription,
-          price: this.productPrice,
-          category: this.productCategory,
-          image: this.productImage
-        };
-      }
-      this.toggleForm();
-    }
-  }
-
-  deleteProduct(form: NgForm) {
-    if (form.valid && this.selectedProductToDelete) {
-      this.products = this.products.filter(product => product !== this.selectedProductToDelete);
-      this.toggleForm();
-    }
-  }
-
-  resetForm() {
-    this.productName = '';
-    this.productDescription = '';
-    this.productPrice = 0;
-    this.productCategory = '';
-    this.productImage = '';
-    this.selectedProduct = null;
-    this.selectedProductToDelete = null;
-  }
-  logout() {
-    localStorage.removeItem('loggedIn');
-    this.router.navigate(['/login']);
   }
 }

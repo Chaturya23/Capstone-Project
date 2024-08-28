@@ -42,14 +42,18 @@ body {
 
 .layout-container {
   display: flex;
+  
   min-height: 100vh;
 }
 
 .sidebar {
-  width: 250px;
-  background-color:#5f9ea0;
-  color: white;
-  padding: 20px;
+  .layout-container {
+    display: flex;
+    flex-direction: row; /* Align children in a horizontal row */
+    min-height: 100vh; /* Ensure the container covers the full viewport height */
+    align-items: stretch; /* Make children stretch to the container's height */
+    justify-content: space-between; /* Distribute space between the children */
+  }
 }
 
 .sidebar .logo h2 {

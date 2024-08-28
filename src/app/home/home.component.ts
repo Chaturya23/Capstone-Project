@@ -1,8 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, RouterOutlet,Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { RouterModule, RouterOutlet, Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -10,15 +9,13 @@ import { AuthService } from '../auth.service';
   standalone: true,
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  imports: [CommonModule, FormsModule, RouterOutlet,RouterModule]
+  imports: [CommonModule, FormsModule, RouterOutlet, RouterModule]
 })
 export class HomeComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
-
   menuOpen = false;
   currentView: string = 'home';
-  // menuOpen: boolean = false;
   signInEmail: string = '';
   signInPassword: string = '';
   signUpFullName: string = '';
@@ -62,21 +59,16 @@ export class HomeComponent {
             alert('Registration failed');
         }
     );
-}
+  }
 
- 
-
-  // Method to toggle the side menu
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
 
-  // Method to close the side menu
   closeMenu() {
     this.menuOpen = false;
   }
 
-  // Close the menu when clicking outside of it
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
     const target = event.target as HTMLElement;
@@ -86,7 +78,6 @@ export class HomeComponent {
   }
 
   navigateTo(page: string): void {
-    // Add navigation logic here
     console.log('Navigate to:', page);
   }
 }

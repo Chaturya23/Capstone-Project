@@ -58,11 +58,18 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
 } */
+
+
 .product {
-  flex: 1 1 calc(25% - 10px); /* 4 items in a row, accounting for gap */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  max-width: calc(25% - 10px); /* Maximum width for each item */
-  text-align: center; /* Center content */
+  flex: 1 1 calc(25% - 10px); /* Adjust for spacing */
+  box-sizing: border-box;
+  max-width: calc(25% - 10px); /* Responsive layout */
+  text-align: center;
+  background-color: #f9f9f9; /* Add background color */
+  border: 1px solid #ddd; /* Border for better visibility */
+  border-radius: 8px; /* Rounded corners */
+  padding: 10px; /* Padding for content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
 }
 
 .product h2 {
@@ -101,20 +108,21 @@ label {
 
 input, textarea, select {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
 textarea {
   resize: vertical;
+  min-height: 100px; /* Ensure adequate height */
 }
 
 button {
   background-color: #4CAF50;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 24px; /* Larger padding for better click area */
   cursor: pointer;
   border-radius: 5px;
   margin-right: 10px;
@@ -186,6 +194,38 @@ button:hover {
   z-index: 1001; 
   flex-shrink: 0;/* Ensure it's on top of the overlay */
 }
+.action-dropdown {
+  position: relative;
+}
+
+.action-dropdown button {
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor:pointer;
+  padding: 8px;
+}
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ddd;
+  width: 150px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 10px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
 
 @media (max-width: 600px) {
   .product-name {

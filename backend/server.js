@@ -26,57 +26,25 @@ const ProductSchema = new mongoose.Schema({
 const Product = mongoose.model('Product', ProductSchema);
 
 // Routes for CRUD operations
-
-// Get all products
 app.get('/api/products', async (req, res) => {
-  try {
-    const products = await Product.find();
-    res.json(products);
-  } catch (err) {
-    res.status(500).send('Failed to retrieve products: ' + err.message);
-  }
+  const products = await Product.find();
+  res.json(products);
 });
 
-// Add a new product
 app.post('/api/products', async (req, res) => {
-  try {
-    const product = new Product(req.body);
-    await product.save();
-    res.json(product);
-  } catch (err) {
-    res.status(500).send('Failed to add product: ' + err.message);
-  }
+  const product = new Product(req.body);
+  await product.save();
+  res.json(product);
 });
 
-// Get product categories
-app.get('/api/products/categories', async (req, res) => {
-  try {
-    const categories = await Product.distinct('category');
-    res.json(categories);
-  } catch (err) {
-    res.status(500).send('Failed to retrieve categories: ' + err.message);
-  }
-});
-
-// Update a product
 app.put('/api/products/:id', async (req, res) => {
-  try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!product) return res.status(404).send('Product not found');
-    res.json(product);
-  } catch (err) {
-    res.status(500).send('Failed to update product: ' + err.message);
-  }
+  const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(product);
 });
 
-// Delete a product
 app.delete('/api/products/:id', async (req, res) => {
-  try {
-    await Product.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Product deleted' });
-  } catch (err) {
-    res.status(500).send('Failed to delete product: ' + err.message);
-  }
+  await Product.findByIdAndDelete(req.params.id);
+  res.json({ message: 'Product deleted' });
 });
 
 // Start server

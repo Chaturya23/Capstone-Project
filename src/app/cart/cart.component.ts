@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -11,6 +12,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, MatCardModule, MatButtonModule]
 })
 export class CartComponent implements OnInit {
+  constructor(private router: Router) {}
   cartItems: any[] = [];
   totalPrice: number = 0;
 
@@ -41,14 +43,12 @@ export class CartComponent implements OnInit {
   }
 
   checkout(): void {
-    alert('Payment is done!');
-    // Optionally clear cart items after checkout
-    this.cartItems = [];
-    this.saveCartItems();
-    this.updateTotalPrice();
+    this.router.navigate(['/checkout']);
   }
 
   private saveCartItems(): void {
     localStorage.setItem(this.cartKey, JSON.stringify(this.cartItems));
   }
+  
+  
 }

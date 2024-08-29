@@ -8,6 +8,7 @@ import { ProductComponent } from './products/products.component';
 import { ContactusComponent } from './contactus/contactus.component';
 import { ShopComponent } from './shop/shop.component';
 import { CartComponent } from './cart/cart.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 import { RouterModule } from '@angular/router';
 // import { ShopComponent } from './shop/shop.component';
 // import { AboutComponent } from './about/about.component';
@@ -20,6 +21,7 @@ export const routes: Routes = [
   { path: 'contactus', component: ContactusComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'checkout', component: CheckoutComponent },
 //   { path: 'about', component: AboutComponent },
 //   { path: 'contact', component: ContactComponent },
 ];

@@ -1,13 +1,14 @@
 <div class="page-container">
-  <header class="header">
+  <!-- Header section (commented out) -->
+  <!-- <header class="header">
     <div class="menu-icon" (click)="toggleMenu()">
-      &#9776; <!-- Hamburger icon -->
+      &#9776; 
     </div>
     <h3>Products</h3>
     <div class="action-buttons">
       <button (click)="showAddForm()">Add Product</button>
     </div>
-  </header>
+  </header> -->
 
   <section class="products">
     <div *ngIf="loading">Loading products...</div>
@@ -20,7 +21,8 @@
 
         <button (click)="startEditing(product)">Edit</button>
         <button (click)="confirmDelete(product)">Delete</button>
-
+        <button (click)="showAddForm()">Add Product</button>
+        
         <!-- Inline editing form -->
         <div *ngIf="editingProduct && editingProduct._id === product._id" class="product-form-container">
           <form (ngSubmit)="updateProduct()">

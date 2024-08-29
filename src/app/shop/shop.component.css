@@ -33,3 +33,11 @@
 .error {
   color: red;
 }
+/* Increase the size of the category dropdown */
+#category {
+  font-size: 9rem; /* Adjust font size as needed */
+  padding: 0.5rem;   /* Add padding for better appearance */
+  width: 100%;       /* Make dropdown full width or set specific width */
+  max-width: 300px;  /* Set a maximum width */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}

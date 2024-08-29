@@ -1,10 +1,83 @@
 <nav class="side-menu">
-    <div class="menu-content">
-      <a class="menu-item" [routerLink]="['/home']" >HOME</a>
-      <a class="menu-item" [routerLink]="['/shop']" >SHOP</a>
-      <a class="menu-item" [routerLink]="['/products']" >PRODUCTS</a>
-      <a class="menu-item" [routerLink]="['/cart']" >CART</a>
-      <a class="menu-item" [routerLink]="['/aboutus']" >About Us</a>
-      <a class="menu-item" [routerLink]="['/contactus']" >Contact Us</a>
-    </div>
+  <div class="menu-content">
+    <a class="menu-item" [routerLink]="['/home']">HOME</a>
+    <a class="menu-item" [routerLink]="['/shop']">SHOP</a>
+    <a class="menu-item" [routerLink]="['/products']">PRODUCTS</a>
+    <a class="menu-item" [routerLink]="['/cart']">CART</a>
+    <a class="menu-item" [routerLink]="['/aboutus']">About Us</a>
+    <a class="menu-item" [routerLink]="['/contactus']">Contact Us</a>
+  </div>
+
+  <!-- Sign In and Sign Up Buttons -->
+  <div class="auth-buttons">
+    <button (click)="showForm('signIn')">Sign In</button>
+    <button (click)="showForm('signUp')">Sign Up</button>
+  </div>
 </nav>
+
+<div class="form-overlay" *ngIf="currentView !== ''">
+  <div [ngSwitch]="currentView" class="form-popup">
+    <!-- Sign In Form -->
+    <ng-container *ngSwitchCase="'signIn'">
+      <form (ngSubmit)="signIn()" #signInForm="ngForm">
+        <div class="form-group">
+          <label for="signInEmail">Email:</label>
+          <input id="signInEmail" [(ngModel)]="signInEmail" name="email" required>
+          <div *ngIf="signInForm.submitted && !signInEmail" class="error">
+            Email is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="signInPassword">Password:</label>
+          <input id="signInPassword" type="password" [(ngModel)]="signInPassword" name="password" required>
+          <div *ngIf="signInForm.submitted && !signInPassword" class="error">
+            Password is required
+          </div>
+        </div>
+        <button type="submit">Sign In</button>
+      </form>
+    </ng-container>
+
+    <!-- Sign Up Form -->
+    <ng-container *ngSwitchCase="'signUp'">
+      <form (ngSubmit)="signUp()" #signUpForm="ngForm">
+        <div class="form-group">
+          <label for="signUpFullName">Full Name:</label>
+          <input id="signUpFullName" [(ngModel)]="signUpFullName" name="fullName" required>
+          <div *ngIf="signUpForm.submitted && !signUpFullName" class="error">
+            Full Name is required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="signUpEmail">Email:</label>
+          <input id="signUpEmail" [(ngModel)]="signUpEmail" name="email" required email>
+          <div *ngIf="signUpForm.submitted && !signUpEmail" class="error">
+            Invalid email address
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="signUpPhone">Phone Number:</label>
+          <input id="signUpPhone" [(ngModel)]="signUpPhone" name="phone" required pattern="^[0-9]{10}$">
+          <div *ngIf="signUpForm.submitted && !signUpPhone" class="error">
+            Phone number must be 10 digits
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="signUpPassword">Password:</label>
+          <input id="signUpPassword" type="password" [(ngModel)]="signUpPassword" name="password" required minlength="6">
+          <div *ngIf="signUpForm.submitted && !signUpPassword" class="error">
+            Password must be at least 6 characters long
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="signUpConfirmPassword">Confirm Password:</label>
+          <input id="signUpConfirmPassword" type="password" [(ngModel)]="signUpConfirmPassword" name="confirmPassword" required>
+          <div *ngIf="signUpForm.submitted && signUpPassword !== signUpConfirmPassword" class="error">
+            Passwords do not match
+          </div>
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+    </ng-container>
+  </div>
+</div>

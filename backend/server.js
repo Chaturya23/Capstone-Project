@@ -37,6 +37,15 @@ app.post('/api/products', async (req, res) => {
   res.json(product);
 });
 
+app.get('/api/products/categories', async (req, res) => {
+  try {
+    const categories = await Product.distinct('category');
+    res.json(categories);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
 app.put('/api/products/:id', async (req, res) => {
   const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
   res.json(product);

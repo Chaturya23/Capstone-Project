@@ -15,7 +15,7 @@ export class ProductComponent implements OnInit {
   newProduct: any = {};
   editingProduct: any = null;
   showForm: string | null = null;
-  categories: string[] = ['Category 1', 'Category 2', 'Category 3'];
+  categories: string[] = ['Electronics', 'Books', 'Clothing', 'Accessories'];
   loading = false;
   errorMessage: string | null = null;
 
@@ -24,8 +24,16 @@ export class ProductComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.getProducts();
+    this.products = [
+      { name: 'Laptop', description: 'A high-performance laptop', price: 999, category: 'Electronics', image: '/assets/im1.png' },
+      { name: 'Book', description: 'A thrilling novel', price: 15, category: 'Books', image: '/assets/s1.png' },
+      { name: 'T-Shirt', description: 'A comfortable t-shirt', price: 20, category: 'Clothing', image: '/assets/t1.png' },
+      { name: 'Watch', description: 'A stylish watch', price: 120, category: 'Accessories', image: '/assets/hd1.png' },
+      
+    ];
   }
+    // this.getProducts();
+  // }
 
   getProducts(): void {
     this.loading = true;

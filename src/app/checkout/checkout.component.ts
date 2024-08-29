@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-checkout',
@@ -33,8 +34,9 @@ export class CheckoutComponent implements OnInit {
   paymentSuccess: boolean = false;
 
   private cartKey = 'cartItems';
+  private apiUrl = 'http://localhost:3000/api/orders'; // API endpoint for orders
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loadCartItems();
@@ -64,20 +66,35 @@ export class CheckoutComponent implements OnInit {
       }
     }
 
-    // Here you would normally process the payment with a payment gateway
-    // For now, we'll just simulate payment processing
+    // Prepare order data
+    const orderData = {
+      cartItems: this.cartItems,
+      totalPrice: this.totalPrice,
+      shippingDetails: this.shippingDetails,
+      paymentDetails: this.paymentDetails
+    };
 
-    // Clear the cart
-    localStorage.removeItem(this.cartKey);
-    this.cartItems = [];
-    this.totalPrice = 0;
+    // Save order details to the server
+    this.http.post(this.apiUrl, orderData).subscribe({
+      next: (response: any) => {
+        // Clear the cart
+        localStorage.removeItem(this.cartKey);
+        this.cartItems = [];
+        this.totalPrice = 0;
 
-    // Show success message
-    this.paymentSuccess = true;
+        // Show success message
+        this.paymentSuccess = true;
 
-    // Optionally, reset the form or hide the payment section
-    this.shippingDetails = { name: '', address: '', phone: '' };
-    this.paymentDetails = { cardNumber: '', expiryDate: '', cvv: '', upiId: '' }; // Reset all payment details
-    this.selectedPaymentMethod = 'card'; // Reset payment method to default
+        // Optionally, reset the form or hide the payment section
+        this.shippingDetails = { name: '', address: '', phone: '' };
+        this.paymentDetails = { cardNumber: '', expiryDate: '', cvv: '', upiId: '' }; // Reset all payment details
+        this.selectedPaymentMethod = 'card'; // Reset payment method to default
+      },
+      error: (error) => {
+        alert('Error processing payment.');
+        console.error('Error:', error);
+      }
+    });
   }
+
 }

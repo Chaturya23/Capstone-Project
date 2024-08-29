@@ -2,7 +2,10 @@
   <section class="filter">
     <label for="category">Filter by Category:</label>
     <select id="category" (change)="onCategoryChange($event)">
-      <option value="">All Categories</option>
+      <option value="all">All Categories</option>
+      <option value="Chairs">Chairs</option>
+      <option value="sofas">Sofas</option>
+      <option value="tables">Tables</option>
       <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
     </select>
   </section>

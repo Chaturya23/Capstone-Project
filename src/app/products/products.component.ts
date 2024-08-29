@@ -15,105 +15,125 @@ export class ProductComponent implements OnInit {
   newProduct: any = {};
   editingProduct: any = null;
   showForm: string | null = null;
-  categories: string[] = ['Electronics', 'Books', 'Clothing', 'Accessories'];
+  categories: string[] = [];
   loading = false;
   errorMessage: string | null = null;
 
   private apiUrl = 'http://localhost:3000/api/products';
+  private categoriesUrl = 'http://localhost:3000/api/products/categories';
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.products = [
-      { name: 'Laptop', description: 'A high-performance laptop', price: 999, category: 'Electronics', image: '/assets/im1.png' },
-      { name: 'Book', description: 'A thrilling novel', price: 15, category: 'Books', image: '/assets/s1.png' },
-      { name: 'T-Shirt', description: 'A comfortable t-shirt', price: 20, category: 'Clothing', image: '/assets/t1.png' },
-      { name: 'Watch', description: 'A stylish watch', price: 120, category: 'Accessories', image: '/assets/hd1.png' },
-      
-    ];
+    this.getCategories();
+    this.getProducts();
   }
-    // this.getProducts();
-  // }
 
+  // Fetch categories from the server
+  getCategories(): void {
+    this.http.get<string[]>(this.categoriesUrl).subscribe({
+      next: (data) => {
+        this.categories = data;
+        console.log('Categories loaded:', this.categories); // Debugging
+      },
+      error: (error) => {
+        console.error('Error loading categories:', error); // Debugging
+        this.errorMessage = 'Failed to load categories. Please try again later.';
+      }
+    });
+  }
+
+  // Fetch products from the server
   getProducts(): void {
     this.loading = true;
     this.errorMessage = null;
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
+        console.log('Products loaded:', data); // Debugging
         this.products = data;
         this.loading = false;
       },
       error: (error) => {
+        console.error('Error loading products:', error); // Debugging
         this.errorMessage = 'Failed to load products. Please try again later.';
         this.loading = false;
       }
     });
   }
 
+  // Add a new product
   addProduct(): void {
     if (this.newProduct.name && this.newProduct.price) {
       this.http.post(this.apiUrl, this.newProduct).subscribe({
-        next: () => {
+        next: (data) => {
+          console.log('Product added:', data); // Debugging
           this.getProducts();
           this.toggleForm(); // Close form after adding product
         },
         error: (error) => {
+          console.error('Error adding product:', error); // Debugging
           this.errorMessage = 'Failed to add product. Please try again later.';
         }
       });
     }
   }
 
+  // Start editing a product
   startEditing(product: any): void {
     this.editingProduct = { ...product }; // Create a copy to edit
     console.log('Editing Product:', this.editingProduct); // Debugging
   }
 
+  // Update a product
   updateProduct(): void {
     if (this.editingProduct) {
       this.http.put(`${this.apiUrl}/${this.editingProduct._id}`, this.editingProduct).subscribe({
-        next: () => {
+        next: (data) => {
+          console.log('Product updated:', data); // Debugging
           this.getProducts();
           this.editingProduct = null; // Close form after updating product
         },
         error: (error) => {
+          console.error('Error updating product:', error); // Debugging
           this.errorMessage = 'Failed to update product. Please try again later.';
         }
       });
     }
   }
 
+  // Cancel editing a product
   cancelEditing(): void {
     this.editingProduct = null; // Close form
   }
 
+  // Confirm and delete a product
   confirmDelete(product: any): void {
     if (confirm('Are you sure you want to delete this product?')) {
       this.deleteProduct(product);
     }
   }
 
+  // Delete a product
   deleteProduct(product: any): void {
     this.http.delete(`${this.apiUrl}/${product._id}`).subscribe({
       next: () => {
+        console.log('Product deleted:', product); // Debugging
         this.getProducts();
       },
       error: (error) => {
+        console.error('Error deleting product:', error); // Debugging
         this.errorMessage = 'Failed to delete product. Please try again later.';
       }
     });
   }
 
-  toggleMenu() {
-    // Add your logic to toggle the menu here
-    console.log('Menu toggled');
-  }
-
+  // Show form to add a new product
   showAddForm(): void {
     this.showForm = 'add';
     this.newProduct = {}; // Reset new product form
   }
 
+  // Toggle form visibility
   toggleForm(): void {
     this.showForm = null;
   }

@@ -18,10 +18,12 @@
         <img [src]="product.image" [alt]="product.name" class="product-image">
         <h2>{{ product.name }}</h2>
         <h3>Cost ${{ product.price }}</h3>
-
+        <div class="button-container">
         <button (click)="startEditing(product)">Edit</button>
         <button (click)="confirmDelete(product)">Delete</button>
         <button (click)="showAddForm()">Add Product</button>
+        </div>
+        
         
         <!-- Inline editing form -->
         <div *ngIf="editingProduct && editingProduct._id === product._id" class="product-form-container">

@@ -28,7 +28,8 @@ export class CheckoutComponent implements OnInit {
   shippingDetails = {
     name: '',
     address: '',
-    phone: ''
+    phone: '',
+    email: '' // Added email field
   };
   selectedPaymentMethod: string = 'card'; // Default payment method
   paymentSuccess: boolean = false;
@@ -54,6 +55,11 @@ export class CheckoutComponent implements OnInit {
 
   processPayment(): void {
     // Check for required fields based on selected payment method
+    if (!this.shippingDetails.email) {
+      alert('Please provide your email address.');
+      return;
+    }
+
     if (this.selectedPaymentMethod === 'card') {
       if (!this.paymentDetails.cardNumber || !this.paymentDetails.expiryDate || !this.paymentDetails.cvv) {
         alert('Please fill in all card details.');
@@ -86,7 +92,7 @@ export class CheckoutComponent implements OnInit {
         this.paymentSuccess = true;
 
         // Optionally, reset the form or hide the payment section
-        this.shippingDetails = { name: '', address: '', phone: '' };
+        this.shippingDetails = { name: '', address: '', phone: '', email: '' };
         this.paymentDetails = { cardNumber: '', expiryDate: '', cvv: '', upiId: '' }; // Reset all payment details
         this.selectedPaymentMethod = 'card'; // Reset payment method to default
       },
@@ -96,5 +102,4 @@ export class CheckoutComponent implements OnInit {
       }
     });
   }
-
 }

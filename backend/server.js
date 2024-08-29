@@ -27,6 +27,18 @@ const ProductSchema = new mongoose.Schema({
 
 const Product = mongoose.model('Product', ProductSchema);
 
+// Middleware to authenticate user
+const authenticateToken = (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, 'your_jwt_secret', (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
 // Define User model
 const UserSchema = new mongoose.Schema({
   fullName: String,
@@ -37,8 +49,8 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', UserSchema);
 
-// Define Order model
 const OrderSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   cartItems: [{
     name: String,
     price: Number,
@@ -50,7 +62,8 @@ const OrderSchema = new mongoose.Schema({
   shippingDetails: {
     name: String,
     address: String,
-    phone: String
+    phone: String,
+    email: String // Added email field
   },
   paymentDetails: {
     cardNumber: String,
@@ -61,6 +74,7 @@ const OrderSchema = new mongoose.Schema({
   selectedPaymentMethod: String,
   date: { type: Date, default: Date.now }
 });
+
 
 const Order = mongoose.model('Order', OrderSchema);
 
@@ -177,7 +191,7 @@ app.delete('/api/products/:id', async (req, res) => {
 app.get('/api/products/categories', (req, res) => {
   try {
     // Assuming categories are predefined and not stored in the database
-    const categories = ['Electronics', 'Clothing', 'Books', 'Home & Kitchen'];
+    const categories = ['Chairs', 'Sofas', 'Table', 'Home Decor'];
     res.json(categories);
   } catch (err) {
     console.error('Error fetching categories:', err);
@@ -185,6 +199,49 @@ app.get('/api/products/categories', (req, res) => {
   }
 });
 
+// Route to create a new order
+app.post('/api/orders', async (req, res) => {
+  try {
+    const orderData = req.body;
+    
+    // Validate required fields
+    if (!orderData.shippingDetails.email) {
+      return res.status(400).json({ error: 'Email is required in shipping details' });
+    }
+    
+    const order = new Order(orderData);
+    await order.save();
+    res.status(201).json(order);
+  } catch (err) {
+    console.error('Error creating order:', err);
+    res.status(500).json({ error: 'Failed to create order' });
+  }
+});
+
+// Route to get orders for the logged-in user
+app.get('/api/orders', authenticateToken, async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.user.id });
+    res.json(orders);
+  } catch (err) {
+    console.error('Error fetching orders:', err);
+    res.status(500).json({ error: 'Failed to fetch orders' });
+  }
+});
+
+// Route to get a specific order by ID for the logged-in user
+app.get('/api/orders/:id', authenticateToken, async (req, res) => {
+  try {
+    const order = await Order.findOne({ _id: req.params.id, userId: req.user.id });
+    if (!order) {
+      return res.status(404).json({ error: 'Order not found or access denied' });
+    }
+    res.json(order);
+  } catch (err) {
+    console.error('Error fetching order:', err);
+    res.status(500).json({ error: 'Failed to fetch order' });
+  }
+});
 // Start server
 app.listen(3000, () => {
   console.log('Server running on http://localhost:3000');

@@ -15,7 +15,7 @@ export class ProductComponent implements OnInit {
   newProduct: any = {};
   editingProduct: any = null;
   showForm: string | null = null;
-  categories: string[] = [];
+  categories: string[] = ['chairs', 'tables', 'sofas'];
   loading = false;
   errorMessage: string | null = null;
 

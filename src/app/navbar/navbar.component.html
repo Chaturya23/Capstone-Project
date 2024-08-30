@@ -2,7 +2,7 @@
   <div class="menu-content">
     <a class="menu-item" [routerLink]="['/home']">HOME</a>
     <a class="menu-item" [routerLink]="['/shop']">SHOP</a>
-    <a class="menu-item" [routerLink]="['/products']">PRODUCTS</a>
+    <a *ngIf="isAdmin" class="menu-item" [routerLink]="['/products']">PRODUCTS</a>
     <a class="menu-item" [routerLink]="['/cart']">CART</a>
     <a class="menu-item" [routerLink]="['/contactus']">Contact Us</a>
     <a class="menu-item" [routerLink]="['/sign-in']">Sign IN</a>

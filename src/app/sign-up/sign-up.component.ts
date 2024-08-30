@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
+ 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
@@ -17,17 +17,18 @@ export class SignUpComponent {
   signUpPhone: string = '';
   signUpPassword: string = '';
   signUpConfirmPassword: string = '';
-
+ 
   private apiUrl = 'http://localhost:3000/api/users'; // Correct API URL
-
+isAdmin: any;
+ 
   constructor(private http: HttpClient, private router: Router) {}
-
+ 
   signUp(): void {
     if (this.signUpPassword !== this.signUpConfirmPassword) {
-        alert('Passwords do not match');
-        return;
+      alert('Passwords do not match');
+      return;
     }
-
+ 
     this.http.post<any>(`${this.apiUrl}/signup`, {
       fullName: this.signUpFullName,
       email: this.signUpEmail,
@@ -41,7 +42,7 @@ export class SignUpComponent {
       },
       error => {
         console.error('Sign Up Failed', error);
-        alert('Registration failed');
+        alert('Registration failed: ' + (error.error.error || 'Unknown error'));
       }
     );
   }

@@ -1,52 +1,63 @@
+ 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
-
+import { catchError, tap } from 'rxjs/operators';
+ 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/api/users'; // Adjust API URL as needed
-  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
-  private isAdminSubject = new BehaviorSubject<boolean>(false); // Added to track admin status
-
+  private apiUrl = 'http://localhost:3000/api/users'; // Updated endpoint
+  private adminCredentials = {
+    email: 'admin@gmail.com',
+    password: 'adminpass'
+  };
+ 
+  private adminStatus = new BehaviorSubject<boolean>(false); // Holds the admin status
+ 
   constructor(private http: HttpClient) {}
-
+ 
+  // Method to sign in and check if the user is an admin
   signIn(email: string, password: string): Observable<any> {
+    // Admin check
+    if (email === this.adminCredentials.email && password === this.adminCredentials.password) {
+      this.adminStatus.next(true); // Set admin status to true
+      return new Observable(observer => {
+        observer.next({ isAdmin: true });
+        observer.complete();
+      });
+    }
+ 
+    // Regular user check
     return this.http.post<any>(`${this.apiUrl}/signin`, { email, password }).pipe(
       tap(response => {
-        if (response && response.token) {
-          localStorage.setItem('token', response.token); // Store token
-          this.isLoggedInSubject.next(true); // Update login status
-          this.checkIfAdmin(); // Check if the user is an admin
-        }
+        // Update admin status based on response
+        this.adminStatus.next(response.isAdmin || false);
+      }),
+      catchError(error => {
+        // Handle error, e.g., log it or notify the user
+        console.error('Sign In Error:', error);
+        throw error; // Rethrow error to be handled by subscriber
       })
     );
   }
-
-  checkIfAdmin(): void {
-    // Example logic for checking if user is admin; adjust as needed
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Mock check; replace with actual API call
-      this.isAdminSubject.next(true); // Assuming the user is an admin for this example
-    } else {
-      this.isAdminSubject.next(false);
-    }
-  }
-
+ 
+  // Method to get the current admin status as an observable
   getAdminStatus(): Observable<boolean> {
-    return this.isAdminSubject.asObservable();
+    return this.adminStatus.asObservable();
   }
-
-  get isLoggedIn(): Observable<boolean> {
-    return this.isLoggedInSubject.asObservable();
-  }
-
-  logout(): void {
-    localStorage.removeItem('token'); // Remove token
-    this.isLoggedInSubject.next(false); // Update login status
-    this.isAdminSubject.next(false); // Reset admin status
+ 
+  // Method to sign up a new user
+  signUp(fullName: string, email: string, phone: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/signup`, { fullName, email, phone, password }).pipe(
+      catchError(error => {
+        // Handle error, e.g., log it or notify the user
+        console.error('Sign Up Error:', error);
+        throw error; // Rethrow error to be handled by subscriber
+      })
+    );
   }
 }
+ 
+ 

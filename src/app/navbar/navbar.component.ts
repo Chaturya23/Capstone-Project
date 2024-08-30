@@ -1,19 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { RouterModule, RouterOutlet } from '@angular/router';
-import { AuthService } from '../auth.service'; // Adjust the path as needed
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, FormsModule, CommonModule],
+  imports :[RouterModule],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
   currentView: string = '';
-  isAdmin: boolean = false; // Ensure this is declared
+  isAdmin$: Observable<boolean>; // Make it observable
 
   signInEmail: string = '';
   signInPassword: string = '';
@@ -24,28 +23,35 @@ export class NavbarComponent implements OnInit {
   signUpPassword: string = '';
   signUpConfirmPassword: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {
+    this.isAdmin$ = this.authService.getAdminStatus(); // Initialize here
+  }
 
   ngOnInit() {
-    // Subscribe to admin status observable
-    this.authService.getAdminStatus().subscribe(status => {
-      this.isAdmin = status;
-    });
+    // This can remain empty if initialization is done in the constructor
   }
 
   showForm(view: string): void {
     this.currentView = view;
   }
 
-  signIn() {
-    // Add your sign-in logic here
-    console.log('Sign-In form submitted:', this.signInEmail, this.signInPassword);
+  signIn(): void {
+    this.authService.signIn(this.signInEmail, this.signInPassword).subscribe(
+      response => {
+        console.log('Sign-In Successful', response);
+        this.router.navigate(['/shop']);
+      },
+      error => {
+        console.error('Sign-In Failed', error);
+        alert('Invalid credentials');
+      }
+    );
   }
 
-  signUp() {
+  signUp(): void {
     if (this.signUpPassword === this.signUpConfirmPassword) {
-      // Add your sign-up logic here
-      console.log('Sign-Up form submitted:', this.signUpFullName, this.signUpEmail, this.signUpPhone, this.signUpPassword);
+      // Replace with correct sign-up logic if available
+      console.error('Sign-Up logic is not implemented');
     } else {
       console.error('Passwords do not match');
     }

@@ -38,7 +38,6 @@ const authenticateToken = (req, res, next) => {
     next();
   });
 };
-
 // Define User model
 const UserSchema = new mongoose.Schema({
   fullName: String,
@@ -82,13 +81,11 @@ const Order = mongoose.model('Order', OrderSchema);
 app.post('/api/users/signup', async (req, res) => {
   try {
     const { fullName, email, phone, password } = req.body;
-
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
     }
-
     // Create a new user
     const user = new User({ fullName, email, phone, password });
     await user.save();
@@ -98,33 +95,27 @@ app.post('/api/users/signup', async (req, res) => {
     res.status(500).json({ error: 'Failed to register user' });
   }
 });
-
 // Route to handle user sign-in
 app.post('/api/users/signin', async (req, res) => {
   try {
     const { email, password } = req.body;
-
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ error: 'Invalid credentials' });
     }
-
     // Check if the password is correct (without hashing)
     if (user.password !== password) {
       return res.status(400).json({ error: 'Invalid credentials' });
     }
-
     // Generate a token (optional)
     const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
-
     res.json({ message: 'Sign in successful', user, token });
   } catch (err) {
     console.error('Error signing in user:', err);
     res.status(500).json({ error: 'Failed to sign in user' });
   }
 });
-
 // Route to add a new product
 app.post('/api/products', async (req, res) => {
   try {

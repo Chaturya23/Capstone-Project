@@ -12,12 +12,13 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component'; 
 import { OrderComponent } from './order/order.component';
+import { AdminGuard } from './admin.guard';
 
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'products', component: ProductComponent },
+  { path: 'products', component: ProductComponent , canActivate: [AdminGuard]},
   { path: 'contactus', component: ContactusComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'cart', component: CartComponent },

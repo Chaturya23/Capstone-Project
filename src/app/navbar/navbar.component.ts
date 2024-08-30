@@ -1,17 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { AuthService } from '../auth.service'; // Adjust the path as needed
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterOutlet, RouterModule,FormsModule,CommonModule],
+  imports: [RouterOutlet, RouterModule, FormsModule, CommonModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   currentView: string = '';
+  isAdmin: boolean = false; // Ensure this is declared
 
   signInEmail: string = '';
   signInPassword: string = '';
@@ -22,10 +24,18 @@ export class NavbarComponent {
   signUpPassword: string = '';
   signUpConfirmPassword: string = '';
 
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    // Subscribe to admin status observable
+    this.authService.getAdminStatus().subscribe(status => {
+      this.isAdmin = status;
+    });
+  }
+
   showForm(view: string): void {
     this.currentView = view;
   }
-
 
   signIn() {
     // Add your sign-in logic here

@@ -11,7 +11,6 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component'; 
-import { OrderComponent } from './order/order.component';
 import { AdminGuard } from './admin.guard';
 
 
@@ -25,7 +24,7 @@ export const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'sign-in', component: SignInComponent },
   { path: 'sign-up', component: SignUpComponent },
-  { path: 'order', component: OrderComponent },
+ 
 ];
 
 

@@ -11,7 +11,7 @@ export class AdminGuard implements CanActivate {
  
   constructor(private authService: AuthService, private router: Router) {}
  
-  canActivate(): Observable<boolean> {
+  canActivate(route: unknown, state: unknown): Observable<boolean> {
     return this.authService.getAdminStatus().pipe(
       map(isAdmin => {
         if (!isAdmin) {

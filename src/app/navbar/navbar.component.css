@@ -1,6 +1,6 @@
 .side-menu {
     width: 100%;
-    background-color: cadetblue;
+    background-color: #5f9ea0;
     color: #fff;
     padding: 10px;
     display: flex;
@@ -14,8 +14,8 @@
   }
   
   .menu-logo {
-    width: 70px;
-    height: 40px;
+    width: 100px;
+    height: 70px;
   }
   
   .menu-title {
@@ -41,5 +41,24 @@
   .menu-item:hover {
     background-color: #444;
     border-radius: 4px; /* Rounded corners on hover */
+  }
+  button {
+    background-color: cadetblue; /* Red background for the logout button */
+    color: white; /* White text color */
+    border: none;
+    padding: 10px;
+    margin-top: auto; /* Push the button to the bottom */
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+  }
+  
+  button:hover {
+    background-color: #444; /* Darker red on hover */
+  }
+  
+  button:focus {
+    outline: none; /* Remove default focus outline */
   }
   

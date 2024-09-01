@@ -1,6 +1,6 @@
 <nav class="side-menu">
   <div class="menu-header">
-    <img src="assets/Amando.jpg"alt="Logo" class="menu-logo">
+    <img src="assets/logo.jpg"alt="Logo" class="menu-logo">
     <span class="menu-title">Amado Interiors</span>
   </div>
   <div class="menu-content">
@@ -11,5 +11,6 @@
     <a class="menu-item" [routerLink]="['/contactus']">ABOUT US</a>
     <a class="menu-item" [routerLink]="['/sign-in']">SIGN IN</a>
     <a class="menu-item" [routerLink]="['/sign-up']">SIGN UP</a>
+    <button *ngIf="isLoggedIn" (click)="logout()">LOGOUT</button>
   </div>
 </nav>

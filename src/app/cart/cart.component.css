@@ -1,34 +1,37 @@
 /* Main Cart Container */
 .cart-container {
   padding: 20px;
-  max-width: 600px; /* Adjust max-width as needed */
-  margin: 20px; /* Aligns the cart to the left instead of centering */
+  max-width: 1200px;
+  margin: 20px auto;
   font-family: Arial, sans-serif;
+}
+
+/* Grid System */
+.cart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-gap: 15px;
 }
 
 /* Card Styling */
 mat-card {
-  margin-bottom: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  display: flex; /* Enables Flexbox */
-  align-items: center; /* Aligns items in the center */
-  justify-content: space-between; /* Evenly spaces out the content */
-  padding: 10px; /* Adds padding inside the card */
+  display: flex;
+  flex-direction: column;
+  padding: 10px; /* Reduced padding inside the card */
 }
 
 /* Card Header */
 mat-card-header {
-  flex: 1; /* Allows the header to take up remaining space */
   background-color: #f4f4f4;
   border-bottom: 1px solid #ddd;
-  padding: 8px;
-  overflow: hidden;
+  padding: 5px 8px; /* Reduced padding */
 }
 
 /* Card Title and Subtitle */
 mat-card-title {
-  font-size: 16px;
+  font-size: 14px; /* Slightly reduced font size */
   font-weight: bold;
 }
 
@@ -37,31 +40,87 @@ mat-card-subtitle {
   color: #666;
 }
 
-/* Image Styling - Small Size */
-mat-card-image {
-  width: 70px;
-    height: 40px; /* Reduced height */
-  object-fit: cover; /* Ensures the image covers the area without stretching */
-  border-radius: 5px; /* Optional: adds a slight rounding to the image edges */
-  margin-right: 15px; /* Adds space between image and text */
+/* Image Styling */
+.cart_image {
+  width: auto;
+  height: 200px; /* Reduced height */
+  object-fit: contain;
+  border-radius: 5px;
+  margin: 8px 0; /* Reduced margin */
 }
 
 /* Card Content */
 mat-card-content {
-  flex: 2; /* Allows content to take more space */
-  padding: 0 12px; /* Adds padding to the content */
+  padding: 8px 10px; /* Reduced padding */
   background-color: #fafafa;
+  font-size: 13px; /* Slightly reduced font size */
 }
 
 /* Card Actions */
 mat-card-actions {
-  flex: 1; /* Allows the actions to take up the remaining space */
   text-align: right;
-  padding: 8px;
+  padding: 5px 8px; /* Reduced padding */
 }
 
+/* Button styling */
 button {
-  margin-top: 8px;
+  margin-top: 5px; /* Reduced margin */
+  font-size: 12px; /* Slightly reduced font size */
+  cursor: pointer;
+  outline: none;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: transform 0.2s ease;
+  
+
+}
+.remove_button{
+  background-color: cadetblue;
+  color: white;
+}
+/* Remove Button */
+.remove_button:hover {
+  animation: sad-animation 0.5s forwards;
+
+}
+
+.checkout_button{
+  background-color: cadetblue;
+  color: white;
+}
+
+/* Proceed to Checkout Button */
+.checkout_button:hover {
+  animation: happy-animation 0.5s forwards;
+  
+}
+
+
+/* Sad Animation */
+@keyframes sad-animation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9) rotate(10deg);
+  }
+  100% {
+    transform: scale(0.8) rotate(-10deg);
+  }
+}
+
+/* Happy Animation */
+@keyframes happy-animation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1) rotate(-10deg);
+  }
+  100% {
+    transform: scale(1.2) rotate(10deg);
+  }
 }
 
 /* Cart Summary */

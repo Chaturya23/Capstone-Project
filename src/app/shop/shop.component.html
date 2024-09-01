@@ -10,7 +10,7 @@
   <section class="products">
     <div *ngIf="loading">Loading products...</div>
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-    <div class="product-row">
+    <div class="product-grid">
       <div *ngFor="let product of filteredProducts" class="product-card">
         <img [src]="product.image" [alt]="product.name" class="product-image">
         <div class="product-info">

@@ -51,15 +51,15 @@ body {
   font-weight: bold;
 }
 
-/* Product Card */
-.product-row {
-  display: flex;
-  flex-wrap: wrap;
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
 }
 
+/* Product Card */
 .product-card {
-  flex: 1 1 calc(33.333% - 20px);
   display: flex;
   flex-direction: column;
   background-color: #fff;

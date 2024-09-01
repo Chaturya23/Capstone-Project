@@ -1,3 +1,4 @@
+/* Base styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -9,7 +10,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color:cadetblue;
+  background-color: cadetblue;
   color: white;
 }
 
@@ -24,7 +25,6 @@ body {
 .logo {
   font-size: 24px;
   font-weight: bold;
-  
 }
 
 .auth-buttons {
@@ -42,18 +42,17 @@ body {
 
 .layout-container {
   display: flex;
-  
   min-height: 100vh;
 }
 
+/* Sidebar styles */
 .sidebar {
-  .layout-container {
-    display: flex;
-    flex-direction: row; /* Align children in a horizontal row */
-    min-height: 100vh; /* Ensure the container covers the full viewport height */
-    align-items: stretch; /* Make children stretch to the container's height */
-    justify-content: space-between; /* Distribute space between the children */
-  }
+  display: flex;
+  flex-direction: column; /* Align children in a vertical column */
+  min-height: 100vh; /* Ensure the container covers the full viewport height */
+  align-items: stretch; /* Make children stretch to the container's height */
+  justify-content: space-between; /* Distribute space between the children */
+  background-color: #5f9ea0; /* Background color for sidebar */
 }
 
 .sidebar .logo h2 {
@@ -65,7 +64,7 @@ body {
 .sidebar .logo p {
   margin: 5px 0 20px;
   font-size: 14px;
-  color:black;
+  color: black;
 }
 
 .sidebar nav ul {
@@ -171,20 +170,98 @@ body {
 
 /* Error message styling */
 .error {
-  color: #e74c3c;
-  font-size: 14px;
-  margin-top: 5px;
-}
-
-.error {
   color: red;
   font-size: 12px;
   margin-top: 5px;
 }
 
 footer {
-  background-color:cadetblue;
+  background-color: cadetblue;
   color: white;
   text-align: center;
   padding: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .layout-container {
+    flex-direction: column; /* Stack layout vertically on smaller screens */
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row; /* Align sidebar and content in a row */
+  }
+
+  .sidebar nav ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; /* Allow items to wrap onto new lines */
+    padding: 0;
+  }
+
+  .sidebar nav ul li {
+    margin-bottom: 0;
+    margin-right: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column; /* Stack header elements vertically */
+    align-items: flex-start;
+  }
+
+  .hamburger {
+    font-size: 20px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .auth-buttons {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .auth-buttons button {
+    margin-left: 0;
+    padding: 8px 15px;
+  }
+
+  .image-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two columns for smaller screens */
+  }
+
+  .form-container {
+    max-width: 100%;
+    padding: 20px; /* Adjust padding */
+  }
+}
+
+@media (max-width: 480px) {
+  .header-container {
+    padding: 10px;
+  }
+
+  .hamburger {
+    font-size: 18px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .auth-buttons button {
+    padding: 8px 10px;
+  }
+
+  .image-grid {
+    grid-template-columns: 1fr; /* Single column for very small screens */
+  }
+
+  .form-container {
+    padding: 15px; /* Adjust padding */
+  }
 }

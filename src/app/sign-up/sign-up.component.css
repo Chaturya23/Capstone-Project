@@ -6,26 +6,32 @@ body {
   height: 100vh;
   background: #ecf0f3;
   display: flex;
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
+  align-items: center; 
+  justify-content: center; 
   font-family: 'Poppins', sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .container {
   position: relative;
-  width: 350px;
+  width: 100%;
+  max-width: 350px; 
   padding: 40px;
+  margin:auto;
   background: #ecf0f3;
   border-radius: 20px;
-  text-align: center; /* Center text content */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Optional shadow for a softer effect */
+  text-align: center; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+  box-sizing: border-box;
 }
 
 .custom-logo {
-  width: 80px; /* Adjust width as needed */
+  width: 20%; 
+  max-width: 80px; 
   height: auto;
-  margin: 20px auto; /* Center logo horizontally */
-  display: block; /* Ensures the image is centered */
+  margin: 20px auto; 
+  display: block; 
 }
 
 .brand-title {
@@ -101,4 +107,33 @@ a {
   background: yellow;
   border-radius: 10px;
   padding: 2px;
+}
+
+/* Media Query for smaller screens */
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 20px;
+    box-shadow: none; /* Remove shadow for smaller screens */
+  }
+
+  .custom-logo {
+    width: 30%; /* Larger for smaller screens */
+    max-width: 60px;
+  }
+
+  .brand-title {
+    font-size: 1.5rem; /* Slightly smaller text */
+  }
+
+  button {
+    height: 35px;
+    font-size: 14px;
+  }
+}
+
+/* Media Query for larger screens */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 400px; /* Slightly wider on larger screens */
+  }
 }

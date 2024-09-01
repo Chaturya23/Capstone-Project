@@ -62,11 +62,11 @@ export class ShopComponent implements OnInit {
   }
 
   addToCart(product: any): void {
-    // Get existing cart items from localStorage
+  
     const existingCartItems = localStorage.getItem(this.cartKey);
     const cartItems = existingCartItems ? JSON.parse(existingCartItems) : [];
 
-    // Check if the product is already in the cart
+  
     const existingProduct = cartItems.find((item: any) => item._id === product._id);
 
     if (existingProduct) {

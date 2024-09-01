@@ -29,6 +29,7 @@ body {
   height: 500px;
   border-radius: 20px;
   padding: 40px;
+  margin: auto;
   box-sizing: border-box;
   background: #ecf0f3;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -123,4 +124,31 @@ a {
   background: yellow;
   border-radius: 10px;
   padding: 2px;
+}
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 20px;
+    box-shadow: none; /* Remove shadow for smaller screens */
+  }
+
+  .custom-logo {
+    width: 30%; /* Larger for smaller screens */
+    max-width: 60px;
+  }
+
+  .brand-title {
+    font-size: 1.5rem; /* Slightly smaller text */
+  }
+
+  button {
+    height: 35px;
+    font-size: 14px;
+  }
+}
+
+/* Media Query for larger screens */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 400px; /* Slightly wider on larger screens */
+  }
 }

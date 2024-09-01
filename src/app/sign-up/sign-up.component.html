@@ -22,8 +22,6 @@
     <label for="signUpConfirmPassword">CONFIRM PASSWORD</label>
     <input id="signUpConfirmPassword" type="password" [(ngModel)]="signUpConfirmPassword" name="confirmPassword" #confirmPassword="ngModel" placeholder="Re-enter your password" required />
     <div *ngIf="signUpForm.submitted && signUpPassword !== signUpConfirmPassword" class="error">Passwords do not match</div>
-    
-    <button type="submit">SIGN UP</button>
+     <button type="submit">SIGN UP</button>
   </form>
-  
 </div>

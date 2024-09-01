@@ -12,12 +12,10 @@
         [(ngModel)]="signInEmail"
         name="email"
         #email="ngModel"
-        required
-      />
+        required/>
       <div *ngIf="signInForm.submitted && !email.valid" class="error">
         Email is required
       </div>
-
       <label for="signInPassword">PASSWORD</label>
       <input
         id="signInPassword"
@@ -26,12 +24,10 @@
         [(ngModel)]="signInPassword"
         name="password"
         #password="ngModel"
-        required
-      />
+        required />
       <div *ngIf="signInForm.submitted && !password.valid" class="error">
         Password is required
       </div>
-
       <button type="submit">LOGIN</button>
     </form>
   </div>

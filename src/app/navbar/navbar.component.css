@@ -1,64 +1,126 @@
+/* Base styles for the side menu */
 .side-menu {
-    width: 100%;
-    background-color: #5f9ea0;
-    color: #fff;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .menu-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .menu-logo {
-    width: 100px;
-    height: 70px;
-  }
-  
-  .menu-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #fff;
-    margin-left: 10px;
-  }
-  
+  width: 100%;
+  background-color: #5f9ea0;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header section with logo and title */
+.menu-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Logo styling */
+.menu-logo {
+  width: 100px;
+  height: 70px;
+}
+
+/* Title styling */
+.menu-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  margin-left: 10px;
+}
+
+/* Menu items styling */
+.menu-content {
+  display: flex;
+  flex-direction: row; /* Display menu items in a row */
+  justify-content: space-around; /* Space out the menu items */
+  width: 100%;
+  flex-wrap: wrap; /* Allow items to wrap onto multiple lines if needed */
+}
+
+/* Menu item styling */
+.menu-item {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 15px; /* Add some padding around the items */
+  flex: 1; /* Allow items to grow and shrink */
+  text-align: center; /* Center-align text */
+}
+
+/* Menu item hover effect */
+.menu-item:hover {
+  background-color: #444;
+  border-radius: 4px; /* Rounded corners on hover */
+}
+
+/* Button styling */
+button {
+  background-color: cadetblue; /* Red background for the logout button */
+  color: white; /* White text color */
+  border: none;
+  padding: 10px;
+  margin-top: auto; /* Push the button to the bottom */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+/* Button hover effect */
+button:hover {
+  background-color: #444; /* Darker red on hover */
+}
+
+/* Button focus effect */
+button:focus {
+  outline: none; /* Remove default focus outline */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
   .menu-content {
-    display: flex;
-    flex-direction: row; /* Display menu items in a row */
-    justify-content: space-around; /* Space out the menu items */
-    width: 100%;
+      flex-direction: row; /* Keep items in a row but allow wrapping */
+      justify-content: space-evenly;
+      font-size: 15px; /* Evenly space items */
   }
-  
+
   .menu-item {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 15px; /* Add some padding around the items */
+      flex: 1; /* Allow items to grow equally */
+      padding: 8px; /* Adjust padding for better touch targets */
   }
-  
-  .menu-item:hover {
-    background-color: #444;
-    border-radius: 4px; /* Rounded corners on hover */
+
+  .menu-header {
+      flex-direction: row; /* Keep logo and title in a row */
+      align-items: center; /* Center-align items */
+      margin-bottom: 10px; /* Adjust margin */
   }
+
+  .menu-logo {
+      width: 90px; /* Adjust logo size */
+      height: 60px; /* Adjust logo size */
+  }
+
+  .menu-title {
+      font-size: 18px; /* Adjust font size */
+      margin-left: 10px; /* Adjust margin */
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-title {
+      font-size: 16px; /* Further adjust font size */
+  }
+  .menu-content{
+    font-size: 9px;
+  }
+
+  .menu-logo {
+      width: 70px; /* Further adjust logo size */
+      height: 50px; /* Further adjust logo size */
+  }
+
   button {
-    background-color: cadetblue; /* Red background for the logout button */
-    color: white; /* White text color */
-    border: none;
-    padding: 10px;
-    margin-top: auto; /* Push the button to the bottom */
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: bold;
+      font-size: 0.9em; /* Slightly smaller font size */
+      padding: 8px; /* Adjust padding */
   }
-  
-  button:hover {
-    background-color: #444; /* Darker red on hover */
-  }
-  
-  button:focus {
-    outline: none; /* Remove default focus outline */
-  }
-  
+}

@@ -8,7 +8,7 @@
     <a class="menu-item" [routerLink]="['/shop']">SHOP</a>
     <a *ngIf="isAdmin" class="menu-item" [routerLink]="['/products']">PRODUCTS</a>
     <a class="menu-item" [routerLink]="['/cart']">CART</a>
-    <a class="menu-item" [routerLink]="['/contactus']">ABOUT US</a>
+    <a class="menu-item" [routerLink]="['/contactus']">ABOUTUS</a>
     <a class="menu-item" [routerLink]="['/sign-in']">SIGN IN</a>
     <a class="menu-item" [routerLink]="['/sign-up']">SIGN UP</a>
     <button *ngIf="isLoggedIn" (click)="logout()">LOGOUT</button>

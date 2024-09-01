@@ -1,25 +1,38 @@
-<p>sign-in works!</p>
+<div class="container">
+  <div class="brand-logo"></div>
+  <img src="assets/logo.jpg" alt="Logo" class="custom-logo" />
+  <div class="brand-title">SIGN IN</div>
+  <div class="inputs">
+    <form (ngSubmit)="signIn()" #signInForm="ngForm">
+      <label for="signInEmail">EMAIL</label>
+      <input
+        id="signInEmail"
+        type="email"
+        placeholder="example@test.com"
+        [(ngModel)]="signInEmail"
+        name="email"
+        #email="ngModel"
+        required
+      />
+      <div *ngIf="signInForm.submitted && !email.valid" class="error">
+        Email is required
+      </div>
 
-<div class="form-container">
-    <div class="form-horizontal">
-      <form (ngSubmit)="signIn()" #signInForm="ngForm">
-        <div class="form-group">
-          <label for="signInEmail">Email:</label>
-          <input id="signInEmail" [(ngModel)]="signInEmail" name="email" #email="ngModel" required>
-          <div *ngIf="signInForm.submitted && !email.valid" class="error">
-            Email is required
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="signInPassword">Password:</label>
-          <input id="signInPassword" type="password" [(ngModel)]="signInPassword" name="password" #password="ngModel" required>
-          <div *ngIf="signInForm.submitted && !password.valid" class="error">
-            Password is required
-          </div>
-        </div>
-        <div class="form-group">
-          <button type="submit">Sign In</button>
-        </div>
-      </form>
-    </div>
+      <label for="signInPassword">PASSWORD</label>
+      <input
+        id="signInPassword"
+        type="password"
+        placeholder="Min 6 characters long"
+        [(ngModel)]="signInPassword"
+        name="password"
+        #password="ngModel"
+        required
+      />
+      <div *ngIf="signInForm.submitted && !password.valid" class="error">
+        Password is required
+      </div>
+
+      <button type="submit">LOGIN</button>
+    </form>
   </div>
+</div>

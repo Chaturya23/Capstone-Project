@@ -9,8 +9,8 @@ import { catchError, tap } from 'rxjs/operators';
 export class AuthService {
   private apiUrl = 'http://localhost:3000/api/users'; // Updated endpoint
   private adminCredentials = {
-    email: 'admin@gmail.com',
-    password: 'adminpass'
+    email: 'chatu@gmail.com',
+    password: 'chatu1234'
   };
 
   private adminStatus = new BehaviorSubject<boolean>(false); // Holds the admin status

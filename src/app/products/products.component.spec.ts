@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
-import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { ProductComponent } from './products.component';
 import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser'; // Adjust to match your actual file name
+import { By } from '@angular/platform-browser';
 
 describe('ProductComponent', () => {
   let component: ProductComponent;
@@ -13,8 +13,8 @@ describe('ProductComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        HttpClientModule, // Include HttpClientModule here
-        ProductComponent // Import the standalone component here
+        HttpClientModule,
+        ProductComponent
       ]
     })
     .compileComponents();
@@ -31,8 +31,8 @@ describe('ProductComponent', () => {
   it('should display loading message when loading is true', () => {
     component.loading = true;
     fixture.detectChanges();
-    const loadingMessage: DebugElement | null = fixture.debugElement.query(By.css('.loading-message'));
-    expect(loadingMessage).toBeTruthy(); // Check if the element is found
+    const loadingMessage: DebugElement | null = fixture.debugElement.query(By.css('.products > div'));
+    expect(loadingMessage).toBeTruthy();
     if (loadingMessage) {
       expect(loadingMessage.nativeElement.textContent).toContain('Loading products...');
     }
@@ -42,7 +42,7 @@ describe('ProductComponent', () => {
     component.errorMessage = 'An error occurred';
     fixture.detectChanges();
     const errorMessage: DebugElement | null = fixture.debugElement.query(By.css('.error'));
-    expect(errorMessage).toBeTruthy(); // Check if the element is found
+    expect(errorMessage).toBeTruthy();
     if (errorMessage) {
       expect(errorMessage.nativeElement.textContent).toContain('An error occurred');
     }
@@ -64,7 +64,7 @@ describe('ProductComponent', () => {
     component.products = [{ _id: '1', name: 'Product 1', price: 100, image: 'image1.jpg' }];
     fixture.detectChanges();
     const editButton = fixture.nativeElement.querySelector('.product button');
-    expect(editButton).toBeTruthy(); // Ensure the button exists
+    expect(editButton).toBeTruthy();
     if (editButton) {
       editButton.click();
       fixture.detectChanges();
@@ -72,16 +72,68 @@ describe('ProductComponent', () => {
     }
   });
 
-  it('should call confirmDelete when delete button is clicked', () => {
-    spyOn(component, 'confirmDelete');
-    component.products = [{ _id: '1', name: 'Product 1', price: 100, image: 'image1.jpg' }];
+  it('should call updateProduct when update form is submitted', () => {
+    spyOn(component, 'updateProduct').and.callThrough();
+    
+    // Set up a product to be edited
+    component.editingProduct = { _id: '1', name: 'Updated Product', price: 200 };
+    fixture.detectChanges(); // Trigger change detection
+  
+    const form = fixture.nativeElement.querySelector('form');
+    expect(form).toBeTruthy(); // Ensure the form exists
+    
+    // Check that form fields are present
+    const nameInput = form.querySelector('input#name');
+    const priceInput = form.querySelector('input#price');
+    const submitButton = form.querySelector('button[type="submit"]');
+    
+    expect(nameInput).toBeTruthy();
+    expect(priceInput).toBeTruthy();
+    expect(submitButton).toBeTruthy();
+  
+    // Set form values and submit
+    nameInput.value = 'Updated Product';
+    priceInput.value = '200';
+    nameInput.dispatchEvent(new Event('input'));
+    priceInput.dispatchEvent(new Event('input'));
+    submitButton.click();
+    fixture.detectChanges(); // Trigger change detection
+  
+    expect(component.updateProduct).toHaveBeenCalled();
+  });
+
+  it('should cancel editing a product and hide the form', () => {
+    component.editingProduct = { _id: '1', name: 'Product 1', price: 100 };
     fixture.detectChanges();
-    const deleteButton = fixture.nativeElement.querySelector('button');
-    expect(deleteButton).toBeTruthy(); // Ensure the button exists
-    if (deleteButton) {
-      deleteButton.click();
-      expect(component.confirmDelete).toHaveBeenCalled();
+    const cancelButton = fixture.nativeElement.querySelector('button[type="button"]');
+    expect(cancelButton).toBeTruthy();
+    if (cancelButton) {
+      cancelButton.click();
+      fixture.detectChanges();
+      expect(component.editingProduct).toBeNull();
     }
+  });
+
+  it('should display categories correctly', () => {
+    component.categories = ['chairs', 'tables', 'sofas'];
+    fixture.detectChanges(); // Trigger change detection
+    const categorySelect = fixture.nativeElement.querySelector('select#category');
+    expect(categorySelect).toBeTruthy(); // Check if the select element is present
+  
+    const categoryOptions = categorySelect.querySelectorAll('option');
+    expect(categoryOptions.length).toBe(3); // Ensure there are 3 options
+  
+    // Check option texts
+    expect(categoryOptions[0].textContent).toContain('chairs');
+    expect(categoryOptions[1].textContent).toContain('tables');
+    expect(categoryOptions[2].textContent).toContain('sofas');
+  });
+  
+  it('should show add product form when showForm is set to "add"', () => {
+    component.showForm = 'add';
+    fixture.detectChanges();
+    const form = fixture.nativeElement.querySelector('.product-form-container');
+    expect(form).toBeTruthy();
   });
 
   it('should add a new product when the form is submitted', () => {
@@ -89,7 +141,7 @@ describe('ProductComponent', () => {
     component.showForm = 'add';
     fixture.detectChanges();
     const form = fixture.nativeElement.querySelector('form');
-    expect(form).toBeTruthy(); // Ensure the form exists
+    expect(form).toBeTruthy();
     if (form) {
       form.querySelector('input#name').value = 'New Product';
       form.querySelector('input#price').value = '150';
@@ -103,7 +155,7 @@ describe('ProductComponent', () => {
     component.showForm = 'add';
     fixture.detectChanges();
     const cancelButton = fixture.nativeElement.querySelector('button[type="button"]');
-    expect(cancelButton).toBeTruthy(); // Ensure the cancel button exists
+    expect(cancelButton).toBeTruthy();
     if (cancelButton) {
       cancelButton.click();
       fixture.detectChanges();
@@ -111,41 +163,16 @@ describe('ProductComponent', () => {
     }
   });
 
-  it('should update a product when the update form is submitted', () => {
-    component.editingProduct = { _id: '1', name: 'Updated Product', price: 200 };
+  it('should call confirmDelete when delete button is clicked', () => {
+    spyOn(component, 'confirmDelete');
+    component.products = [{ _id: '1', name: 'Product 1', price: 100, image: 'image1.jpg' }];
     fixture.detectChanges();
-    const form = fixture.nativeElement.querySelector('form');
-    expect(form).toBeTruthy(); // Ensure the form exists
-    if (form) {
-      form.querySelector('input#name').value = 'Updated Product';
-      form.querySelector('input#price').value = '200';
-      form.querySelector('button[type="submit"]').click();
+    const deleteButton = fixture.nativeElement.querySelectorAll('button')[1];
+    expect(deleteButton).toBeTruthy();
+    if (deleteButton) {
+      deleteButton.click();
       fixture.detectChanges();
-      expect(component.updateProduct).toHaveBeenCalled();
-    }
-  });
-
-  it('should cancel editing a product and hide the form', () => {
-    component.editingProduct = { _id: '1', name: 'Product 1', price: 100 };
-    fixture.detectChanges();
-    const cancelButton = fixture.nativeElement.querySelector('button[type="button"]');
-    expect(cancelButton).toBeTruthy(); // Ensure the cancel button exists
-    if (cancelButton) {
-      cancelButton.click();
-      fixture.detectChanges();
-      expect(component.editingProduct).toBeNull();
-    }
-  });
-
-  it('should display categories correctly', () => {
-    component.categories = ['chairs', 'tables', 'sofas'];
-    fixture.detectChanges();
-    const categoryOptions = fixture.nativeElement.querySelectorAll('select#category option');
-    expect(categoryOptions.length).toBe(3);
-    if (categoryOptions.length > 0) {
-      expect(categoryOptions[0].textContent).toContain('chairs');
-      expect(categoryOptions[1].textContent).toContain('tables');
-      expect(categoryOptions[2].textContent).toContain('sofas');
+      expect(component.confirmDelete).toHaveBeenCalled();
     }
   });
 });
